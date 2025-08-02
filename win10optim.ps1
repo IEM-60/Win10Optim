@@ -1,7 +1,7 @@
 # Telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.04.00 - 2025-07-31
+# Version 00.05.00 - 2025-08-01
 
 # FUNCTIONS
 # Registry edit function
@@ -279,9 +279,9 @@ Write-Host
 
 # Services block
 $BLOCKSERVICES = @"
-///////////////////////////////////////////
-///TELEMETRY RELATED SERVICES AND TASKS///
-/////////////////////////////////////////
+/////////////////////////////////////////////////
+///TELEMETRY RELATED SERVICES, TASKS AND KEYS///
+///////////////////////////////////////////////
 "@
 Write-Host $BLOCKSERVICES -ForegroundColor blue
 
@@ -364,6 +364,7 @@ Nuke-Serv -ServName "wisvc"
 Nuke-Serv -ServName "MapsBroker"
 Nuke-Serv -ServName "diagnosticshub.standardcollector.service"
 Nuke-Serv -ServName "WMPNetworkSvc"
+Nuke-Serv -ServName "dmwappushservice"
 
 
 # Updated status report
@@ -378,6 +379,7 @@ Get-ServStat -ServName "wisvc"
 Get-ServStat -ServName "MapsBroker"
 Get-ServStat -ServName "diagnosticshub.standardcollector.service"
 Get-ServStat -ServName "WMPNetworkSvc"
+Get-ServStat -ServName "dmwappushservice"
 
 # DeliveryOptimization
 Write-Host
@@ -411,6 +413,16 @@ Write-Host "SQMLogger Start status:" -ForegroundColor Blue
 Edit-RegxDW -rpath "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SQMLogger" `
 -rname "Start" -rvalue 0
 
+Write-Host "Dmwappushservice Start status:" -ForegroundColor Blue
+Edit-RegxDW -rpath "HKLM:\SYSTEM\CurrentControlSet\Services\dmwappushservice" `
+-rname "Start" -rvalue 4
+
+Write-Host
+
+Write-Host "AllowLinguisticDataCollection status:" -ForegroundColor Blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput" `
+-rname "AllowLinguisticDataCollection" -rvalue 0
+
 Write-Host
 
 Write-Host "GatherNetworkInfo status:" -ForegroundColor blue
@@ -423,8 +435,18 @@ Task-Disabling -tskname "Sqm-Tasks" -tskpath "\Microsoft\Windows\PI\"
 
 Write-Host
 
-Write-Host "QueueReportingstatus:" -ForegroundColor blue
+Write-Host "QueueReporting status:" -ForegroundColor blue
 Task-Disabling -tskname "QueueReporting" -tskpath "\Microsoft\Windows\Windows Error Reporting\"
+
+Write-Host
+
+Write-Host "Proxy status:" -ForegroundColor blue
+Task-Disabling -tskname "Proxy" -tskpath "\Microsoft\Windows\Autochk\"
+
+Write-Host
+
+Write-Host "BthSQM status:" -ForegroundColor blue
+Task-Disabling -tskname "BthSQM" -tskpath "\Microsoft\Windows\Bluetooth\"
 
 Write-Host
 Write-Host
@@ -479,16 +501,22 @@ Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" `
 
 Write-Host
 
-Write-Host "Deactivate feedback notifications status:" -ForegroundColor blue
+Write-Host "DoNotShowFeedbackNotifications status:" -ForegroundColor blue
 
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
 -rname "DoNotShowFeedbackNotifications" -rvalue 1
 
+Write-Host
+
 Write-Host "Notification Task status:" -ForegroundColor blue
 Task-Disabling -tskname "Notification Task" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
 
+Write-Host
+
 Write-Host "DmClient status:" -ForegroundColor blue
 Task-Disabling -tskname "DmClient" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
+
+Write-Host
 
 Write-Host "DmClientOnScenarioDownload status:" -ForegroundColor blue
 Task-Disabling -tskname "DmClientOnScenarioDownload" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
@@ -816,12 +844,32 @@ Write-Host
 
 # Miscellaneous privacy tweaks block
 $BLOCKMISC = @"
-///////////////////////////////////
-///MISCELLANEOUS PRIVACY TWEAKS///
-/////////////////////////////////
+////////////////////////////////////////////////
+///MISCELLANEOUS PRIVACY / DEBLOATING TWEAKS///
+//////////////////////////////////////////////
 "@
 
 Write-Host $BLOCKMISC -ForegroundColor blue
+
+Write-Host "HttpAcceptLanguageOptOut staus:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\Control Panel\International\User Profile" `
+-rname "HttpAcceptLanguageOptOut" -rvalue 1
+
+Write-Host "SilentInstalledAppsEnabled staus:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
+-rname "SilentInstalledAppsEnabled" -rvalue 0
+
+Write-Host
+
+Write-Host "MapsToastTask status:" -ForegroundColor blue
+Task-Disabling -tskname "MapsToastTask" -tskpath "\Microsoft\Windows\Maps\"
+
+Write-Host
+
+Write-Host "MapsUpdateTask status:" -ForegroundColor blue
+Task-Disabling -tskname "MapsUpdateTask" -tskpath "\Microsoft\Windows\Maps\"
 
 # End of script
 
