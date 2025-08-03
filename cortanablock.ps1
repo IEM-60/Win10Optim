@@ -42,8 +42,9 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" `
 
 Write-Host
 
-Write-Host "AcceptedPrivacyPolicy status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Personalization\Settings" `
--rname "AcceptedPrivacyPolicy" -rvalue 0
+Write-Host "ShowCortanaButton status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
+-rname "ShowCortanaButton" -rvalue 0
+
 
 

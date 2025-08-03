@@ -1,7 +1,7 @@
 # Telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.05.00 - 2025-08-01
+# Version 00.06.01 - 2025-08-02
 
 # FUNCTIONS
 # Registry edit function
@@ -159,13 +159,38 @@ Write-Host $INTRO -ForegroundColor green
 Write-Host
 Write-Host
 
-# Registry backup
 # Time stamp
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
 # Backup directory
 $backupFolder = "C:\Backups"
 
-# User prompt
+# Notice
+Write-Host "NOTICE: This script will let you alter important system settings like:" -ForegroundColor Yellow
+Write-Host "Registry entries, services, scheduled tasks and policies." -ForegroundColor Yellow
+Write-Host "It's strongly recommended to create a restore point for your system and a registry backup." -ForegroundColor Yellow
+Write-Host "Before starting making changes, the script will let you create both if you choose to." -ForegroundColor Yellow
+
+Write-Host
+
+# Restore point user prompt
+$restorepresp = Read-Host "Do you want to create a restore point before starting? (recommended) (Y/N)"
+
+if ($restorepresp -match "^[Yy]$") {
+	Write-Host "Creating restore point..." -ForegroundColor Yellow
+	Write-Host "This might take a while..." -ForegroundColor Yellow
+	
+	powershell.exe -Command "Checkpoint-Computer -Description 'Before new settings' -RestorePointType 'MODIFY_SETTINGS'"
+	
+	Write-Host
+	Write-Host "Restore point created" -ForegroundColor Green
+	Write-Host
+}
+
+else {
+	Write-Host "Proceeding without restore point" -ForegroundColor Magenta
+}
+
+# Registry backup user prompt
 $backupresp = Read-Host "Do you want to create a registry backup before starting? (recommended) (Y/N)"
 
 if ($backupresp -match "^[Yy]$") {
@@ -181,12 +206,10 @@ if ($backupresp -match "^[Yy]$") {
 	Write-Host
 	Write-Host "Registry backup complete" -ForegroundColor Green
 	Write-Host
-	Write-Host
 }
 
 else {
-	Write-Host "Proceeding without backup" -ForegroundColor Magenta
-	Write-Host
+	Write-Host "Proceeding without registry backup" -ForegroundColor Magenta
 	Write-Host
 }
 
@@ -777,7 +800,6 @@ $BLOCKWS = @"
 
 Write-Host $BLOCKWS -ForegroundColor blue
 
-# List of services to stop and disable
 Nuke-Serv -ServName "WSearch"
 
 # Updated status report
@@ -811,6 +833,34 @@ Write-Host "SystemPaneSuggestionsEnabled staus:" -ForegroundColor blue
 
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
 -rname "SystemPaneSuggestionsEnabled" -rvalue 0
+
+Write-Host
+
+Write-Host "PreInstalledAppsEnabled staus:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
+-rname "PreInstalledAppsEnabled" -rvalue 0
+
+Write-Host
+
+Write-Host "ContentDeliveryAllowed staus:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
+-rname "ContentDeliveryAllowed" -rvalue 0
+
+Write-Host
+
+Write-Host "SoftLandingEnabled staus:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
+-rname "SoftLandingEnabled" -rvalue 0
+
+Write-Host
+
+Write-Host "ShowSyncProviderNotifications staus:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
+-rname "ShowSyncProviderNotifications" -rvalue 0
 
 Write-Host
 Write-Host
@@ -851,15 +901,39 @@ $BLOCKMISC = @"
 
 Write-Host $BLOCKMISC -ForegroundColor blue
 
+# Registry keys
+
 Write-Host "HttpAcceptLanguageOptOut staus:" -ForegroundColor blue
 
 Edit-RegxDW -rpath "HKCU:\Control Panel\International\User Profile" `
 -rname "HttpAcceptLanguageOptOut" -rvalue 1
 
+Write-Host
+
 Write-Host "SilentInstalledAppsEnabled staus:" -ForegroundColor blue
 
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
 -rname "SilentInstalledAppsEnabled" -rvalue 0
+
+Write-Host
+
+Write-Host "AcceptedPrivacyPolicy status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Personalization\Settings" `
+-rname "AcceptedPrivacyPolicy" -rvalue 0
+
+Write-Host
+
+Write-Host "DisableWindowsConsumerFeatures:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
+-rname "DisableWindowsConsumerFeatures" -rvalue 1
+
+Write-Host
+
+Write-Host "LetAppsAccessAccountInfo:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\Windows\AppPrivacy" `
+-rname "LetAppsAccessAccountInfo" -rvalue 0
+
+# Scheduled tasks
 
 Write-Host
 
@@ -870,6 +944,15 @@ Write-Host
 
 Write-Host "MapsUpdateTask status:" -ForegroundColor blue
 Task-Disabling -tskname "MapsUpdateTask" -tskpath "\Microsoft\Windows\Maps\"
+
+# Services
+
+Write-Host
+
+Nuke-Serv -ServName "RemoteRegistry"
+
+
+
 
 # End of script
 
