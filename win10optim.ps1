@@ -1,7 +1,7 @@
 # Telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.06.01 - 2025-08-02
+# Version 00.07.00 - 2025-08-03
 
 # FUNCTIONS
 # Registry edit function
@@ -152,6 +152,8 @@ $INTRO = @"
    - Activity history - 
    - Tips, sugestions and ads -
    - Parental control -
+   - Webcam -
+   - Microphone -
 "@
 
 Write-Host $INTRO -ForegroundColor green
@@ -892,6 +894,52 @@ Write-Host
 Write-Host
 Write-Host
 
+# Webcam block
+$BLOCKWEBCAM = @"
+/////////////
+///WEBCAM///
+///////////
+"@
+
+Write-Host $BLOCKWEBCAM -ForegroundColor blue
+
+Write-Host "HKLM ConsentStore -> webcam -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host "HKCU ConsentStore -> webcam -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+Write-Host
+Write-Host
+
+# Microphone block
+$BLOCKMIC = @"
+/////////////////
+///MICROPHONE///
+///////////////
+"@
+
+Write-Host $BLOCKMIC -ForegroundColor blue
+
+Write-Host "HKLM ConsentStore -> microphone -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host "HKCU ConsentStore -> microphone -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host "HKLM ConsentStore -> voiceActivation -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\voiceActivation" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+Write-Host
+Write-Host
+
 # Miscellaneous privacy tweaks block
 $BLOCKMISC = @"
 ////////////////////////////////////////////////
@@ -918,31 +966,47 @@ Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliv
 Write-Host
 
 Write-Host "AcceptedPrivacyPolicy status:" -ForegroundColor blue
+
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Personalization\Settings" `
 -rname "AcceptedPrivacyPolicy" -rvalue 0
 
 Write-Host
 
 Write-Host "DisableWindowsConsumerFeatures:" -ForegroundColor blue
+
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
 -rname "DisableWindowsConsumerFeatures" -rvalue 1
 
 Write-Host
 
-Write-Host "LetAppsAccessAccountInfo:" -ForegroundColor blue
+Write-Host "HKLM LetAppsAccessAccountInfo:" -ForegroundColor blue
+
 Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\Windows\AppPrivacy" `
--rname "LetAppsAccessAccountInfo" -rvalue 0
+-rname "LetAppsAccessAccountInfo" -rvalue 2
+
+Write-Host
+
+Write-Host "HKCU LetAppsAccessAccountInfo:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppPrivacy" `
+-rname "LetAppsAccessAccountInfo" -rvalue 2
+
+Write-Host "ConsentStore -> userAccountInformation -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
 
 # Scheduled tasks
 
 Write-Host
 
 Write-Host "MapsToastTask status:" -ForegroundColor blue
+
 Task-Disabling -tskname "MapsToastTask" -tskpath "\Microsoft\Windows\Maps\"
 
 Write-Host
 
 Write-Host "MapsUpdateTask status:" -ForegroundColor blue
+
 Task-Disabling -tskname "MapsUpdateTask" -tskpath "\Microsoft\Windows\Maps\"
 
 # Services
@@ -950,6 +1014,8 @@ Task-Disabling -tskname "MapsUpdateTask" -tskpath "\Microsoft\Windows\Maps\"
 Write-Host
 
 Nuke-Serv -ServName "RemoteRegistry"
+
+Nuke-Serv -ServName "WbioSrvc"
 
 
 
