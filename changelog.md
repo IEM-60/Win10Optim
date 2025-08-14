@@ -1,17 +1,39 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.08.00-Beta - 2025-08-13
+
+### Added:
+
+- Settings > Privacy block
+
+#### Option to disable the following registry keys:
+- HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo\Enabled
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo\DisabledByGroupPolicy
+- HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Start_TrackProgs
+- HKCU:\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy\HasAccepted
+- HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization\AllowInputPersonalization
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection\LimitDiagnosticLogCollection
+
+### Removed:
+
+- Advertising ID and tailored experiences block (settings integrated in different blocks)
+- Typing collection block (settings integrated in Settings > Privacy block)
+- Data collection adn telemetry block (settings integrated in Settings > Privacy block)
+
+***
+
 ## Win10Optim 00.07.00-Beta - 2025-08-06
 
 ### Added:
 #### Option to disable the following services:
-WbioSrvc
+- WbioSrvc
 
 #### Option to disable the following registry keys:
-HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\Value
-HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\Value
-HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone\Value
-HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone\Value
-HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\voiceActivation\Value
+- HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\Value
+- HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\Value
+- HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone\Value
+- HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone\Value
+- HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\voiceActivation\Value
 
 ***
 

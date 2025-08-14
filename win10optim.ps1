@@ -1,7 +1,7 @@
 # Telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.07.00 - 2025-08-03
+# Version 00.08.00 - 2025-08-10
 
 # FUNCTIONS
 # Registry edit function
@@ -144,7 +144,8 @@ $INTRO = @"
    - Windows Customer Experience Improvement Program -
    - Bing search and Cortana Consent - 
    - Location tracking - 
-   - Advertising ID and tailored experiences -
+   - Advertising ID -
+   - Tailored experiences -
    - Cortana -
    - Typing collection - 
    - Background apps - 
@@ -215,18 +216,108 @@ else {
 	Write-Host
 }
 
-
-# Data collection block
-$BLOCKDATACOL = @"
-////////////////////////////////////
-///DATA COLLECTION AND TELEMETRY///
-//////////////////////////////////
+# Settings > Privacy block block
+$BLOCKSETPRIV = @"
+/////////////////////////
+///SETTINGS > PRIVACY///
+///////////////////////
 "@
 
-Write-Host $BLOCKDATACOL -ForegroundColor blue
+Write-Host $BLOCKSETPRIV -ForegroundColor blue
+
+# Windows permissions
+# General
+
+Write-Host
+
+Write-Host ::: Windows permissions ::: -ForegroundColor Cyan
+Write-Host ::: General ::: -ForegroundColor Cyan
+
+Write-Host "HKLM Advertising ID enabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" `
+-rname "Enabled" -rvalue 0
+
+Write-Host
+
+Write-Host "HKCU Advertising ID enabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" `
+-rname "Enabled" -rvalue 0
+
+Write-Host
+
+Write-Host "Advertising ID DisabledByGroupPolicy status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" `
+-rname "DisabledByGroupPolicy" -rvalue 1
+
+Write-Host
+
+Write-Host "HttpAcceptLanguageOptOut staus:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Control Panel\International\User Profile" `
+-rname "HttpAcceptLanguageOptOut" -rvalue 1
+
+Write-Host
+
+Write-Host "Start_TrackProgs status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
+-rname "Start_TrackProgs" -rvalue 0
+
+Write-Host
+
+# Speech
+
+Write-Host ::: Speech ::: -ForegroundColor Cyan
+
+Write-Host "HasAccepted status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy" `
+-rname "HasAccepted" -rvalue 0
+
+Write-Host
+
+Write-Host "AllowInputPersonalization status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
+-rname "AllowInputPersonalization" -rvalue 0
+
+Write-Host
+
+# Inking and typing personalization
+
+Write-Host ::: Inking and typing personalization ::: -ForegroundColor Cyan
+
+Write-Host "HKLM RestrictImplicitTextCollection:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
+-rname "RestrictImplicitTextCollection" -rvalue 1
+
+Write-Host
+
+Write-Host "HKCU RestrictImplicitTextCollection:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization" `
+-rname "RestrictImplicitTextCollection" -rvalue 1
+
+Write-Host
+
+Write-Host "HKLM RestrictImplicitInkCollection:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
+-rname "RestrictImplicitInkCollection" -rvalue 1
+
+Write-Host
+
+Write-Host "HKCU RestrictImplicitInkCollection:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization" `
+-rname "RestrictImplicitInkCollection" -rvalue 1
+
+Write-Host
+
+Write-Host "HarvestContacts:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore" `
+-rname "HarvestContacts" -rvalue 0
+
+Write-Host
+
+# Diagnostics and feedback
+
+Write-Host ::: Diagnostics and feedback ::: -ForegroundColor Cyan
 
 Write-Host "Windows -> DataCollection -> AllowTelemtry status:" -ForegroundColor blue
-
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
 -rname "AllowTelemetry" -rvalue 0
 
@@ -255,8 +346,85 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\
 -rname "AllowTelemetry" -rvalue 0
 
 Write-Host
+
+Write-Host "LimitDiagnosticLogCollection" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
+-rname "LimitDiagnosticLogCollection" -rvalue 1
+
+Write-Host
+
+Write-Host "AllowDeviceNameInDiagnosticData" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
+-rname "AllowDeviceNameInDiagnosticData" -rvalue 0
+
+Write-Host
+
+# App permissions
+# Notifications
+
+Write-Host ::: App permissions ::: -ForegroundColor Cyan
+Write-Host ::: Notifications ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> userNotificationListener -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userNotificationListener" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> userNotificationListener -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userNotificationListener" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
 Write-Host
 Write-Host
+Write-Host
+
+# Webcam block
+$BLOCKWEBCAM = @"
+/////////////
+///WEBCAM///
+///////////
+"@
+
+Write-Host $BLOCKWEBCAM -ForegroundColor blue
+
+Write-Host "HKLM ConsentStore -> webcam -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host "HKCU ConsentStore -> webcam -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+Write-Host
+Write-Host
+
+# Microphone block
+$BLOCKMIC = @"
+/////////////////
+///MICROPHONE///
+///////////////
+"@
+
+Write-Host $BLOCKMIC -ForegroundColor blue
+
+Write-Host "HKLM ConsentStore -> microphone -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host "HKCU ConsentStore -> microphone -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host "HKLM ConsentStore -> voiceActivation -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\voiceActivation" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+Write-Host
+Write-Host
+
 
 # Preview build block
 $BLOCKPREVBUILD = @"
@@ -657,29 +825,6 @@ Write-Host
 Write-Host
 Write-Host
 
-# Advertising ID and tailored experiences block
-$BLOCKADIDTE = @"
-///////////////////////////////////////
-///ADVERTISING INFO & TAILORED EXP ///
-/////////////////////////////////////
-"@
-
-Write-Host $BLOCKADIDTE -ForegroundColor blue
-
-Write-Host "Advertising ID enabled status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" `
--rname "Enabled" -rvalue 0
-
-Write-Host
-
-Write-Host "TailoredExperiencesWithDiagnosticDataEnabled status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" `
--rname "TailoredExperiencesWithDiagnosticDataEnabled" -rvalue 0
-
-Write-Host
-Write-Host
-Write-Host
-
 # Cortana block
 $BLOCKCORTANA = @"
 ///////////////
@@ -690,50 +835,6 @@ $BLOCKCORTANA = @"
 Write-Host $BLOCKCORTANA -ForegroundColor blue
 
 # CORTANA BLOCK
-
-
-
-
-# Typing collection block
-$BLOCKTC = @"
-/////////////////////////
-///TYPING COLLECTION ///
-///////////////////////
-"@
-
-Write-Host $BLOCKCTC -ForegroundColor blue
-
-Write-Host "HKLM RestrictImplicitTextCollection:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
--rname "RestrictImplicitTextCollection" -rvalue 1
-
-Write-Host
-
-Write-Host "HKCU RestrictImplicitTextCollection:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization" `
--rname "RestrictImplicitTextCollection" -rvalue 1
-
-Write-Host
-
-Write-Host "HKLM RestrictImplicitInkCollection:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
--rname "RestrictImplicitInkCollection" -rvalue 1
-
-Write-Host
-
-Write-Host "HKCU RestrictImplicitInkCollection:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization" `
--rname "RestrictImplicitInkCollection" -rvalue 1
-
-Write-Host
-
-Write-Host "HarvestContacts:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore" `
--rname "HarvestContacts" -rvalue 0
-
-Write-Host
-Write-Host
-Write-Host
 
 # Background apps block
 $BLOCKBA = @"
@@ -894,52 +995,6 @@ Write-Host
 Write-Host
 Write-Host
 
-# Webcam block
-$BLOCKWEBCAM = @"
-/////////////
-///WEBCAM///
-///////////
-"@
-
-Write-Host $BLOCKWEBCAM -ForegroundColor blue
-
-Write-Host "HKLM ConsentStore -> webcam -> Value status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" `
--rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
-
-Write-Host "HKCU ConsentStore -> webcam -> Value status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" `
--rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
-
-Write-Host
-Write-Host
-Write-Host
-
-# Microphone block
-$BLOCKMIC = @"
-/////////////////
-///MICROPHONE///
-///////////////
-"@
-
-Write-Host $BLOCKMIC -ForegroundColor blue
-
-Write-Host "HKLM ConsentStore -> microphone -> Value status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" `
--rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
-
-Write-Host "HKCU ConsentStore -> microphone -> Value status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" `
--rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
-
-Write-Host "HKLM ConsentStore -> voiceActivation -> Value status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\voiceActivation" `
--rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
-
-Write-Host
-Write-Host
-Write-Host
-
 # Miscellaneous privacy tweaks block
 $BLOCKMISC = @"
 ////////////////////////////////////////////////
@@ -950,13 +1005,6 @@ $BLOCKMISC = @"
 Write-Host $BLOCKMISC -ForegroundColor blue
 
 # Registry keys
-
-Write-Host "HttpAcceptLanguageOptOut staus:" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKCU:\Control Panel\International\User Profile" `
--rname "HttpAcceptLanguageOptOut" -rvalue 1
-
-Write-Host
 
 Write-Host "SilentInstalledAppsEnabled staus:" -ForegroundColor blue
 
@@ -991,9 +1039,23 @@ Write-Host "HKCU LetAppsAccessAccountInfo:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppPrivacy" `
 -rname "LetAppsAccessAccountInfo" -rvalue 2
 
+Write-Host
+
 Write-Host "ConsentStore -> userAccountInformation -> Value status:" -ForegroundColor blue
+
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" `
 -rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "ConsentStore -> userAccountInformation -> Value status:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host "TailoredExperiencesWithDiagnosticDataEnabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" `
+-rname "TailoredExperiencesWithDiagnosticDataEnabled" -rvalue 0
 
 # Scheduled tasks
 
