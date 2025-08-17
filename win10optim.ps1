@@ -1,7 +1,7 @@
 # Telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.08.00 - 2025-08-10
+# Version 00.10.00 - 2025-08-17
 
 # FUNCTIONS
 # Registry edit function
@@ -283,6 +283,18 @@ Write-Host
 
 Write-Host ::: Inking and typing personalization ::: -ForegroundColor Cyan
 
+Write-Host "AllowLinguisticDataCollection:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput" `
+-rname "AllowLinguisticDataCollection" -rvalue 0
+
+Write-Host
+
+Write-Host "HKCU:\Software\Microsoft\Input\TIPC\Enabled:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Input\TIPC" `
+-rname "Enabled" -rvalue 0
+
+Write-Host
+
 Write-Host "HKLM RestrictImplicitTextCollection:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
 -rname "RestrictImplicitTextCollection" -rvalue 1
@@ -359,6 +371,41 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
 
 Write-Host
 
+Write-Host "TailoredExperiencesWithDiagnosticDataEnabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Privacy" `
+-rname "TailoredExperiencesWithDiagnosticDataEnabled" -rvalue 0
+
+Write-Host
+
+Write-Host "DisableDiagnosticDataViewer status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
+-rname "DisableDiagnosticDataViewer" -rvalue 0
+
+Write-Host
+
+# Activity history
+
+Write-Host ::: Activity history ::: -ForegroundColor Cyan
+
+Write-Host "PublishUserActivities status:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" `
+-rname "PublishUserActivities" -rvalue 0
+
+Write-Host
+
+Write-Host "UploadUserActivities status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" `
+-rname "UploadUserActivities" -rvalue 0
+
+Write-Host
+
+Write-Host "EnableActivityFeed status:" -ForegroundColor blue # Disable timeline
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" `
+-rname "EnableActivityFeed" -rvalue 0
+
+Write-Host
+
 # App permissions
 # Notifications
 
@@ -374,6 +421,244 @@ Write-Host
 Write-Host "HKCU ConsentStore -> userNotificationListener -> Value status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userNotificationListener" `
 -rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Account Info
+Write-Host ::: Account info ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> userAccountInformation -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> userAccountInformation -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKLM LetAppsAccessAccountInfo:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\Windows\AppPrivacy" `
+-rname "LetAppsAccessAccountInfo" -rvalue 2
+
+Write-Host
+
+Write-Host "HKCU LetAppsAccessAccountInfo:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppPrivacy" `
+-rname "LetAppsAccessAccountInfo" -rvalue 2
+
+Write-Host
+
+# Contacts
+Write-Host ::: Contacts ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> contacts -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\contacts" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> contacts -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\contacts" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Calendars
+Write-Host ::: Calendar ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> appointments -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appointments" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> appointments -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appointments" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Phone calls
+Write-Host ::: Phone calls ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> Phone calls -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\phoneCall" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> Phone calls -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\phoneCall" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Tasks
+Write-Host ::: Tasks ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> userDataTasks -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userDataTasks" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> userDataTasks -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userDataTasks" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Messaging
+Write-Host ::: Messaging ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> chat -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\chat" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> chat -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\chat" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Radios
+Write-Host ::: Radios ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> radios -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\radios" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> radios -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\radios" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Background apps
+Write-Host ::: Background apps ::: -ForegroundColor Cyan
+
+Write-Host "GlobalUserDisabled:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications" `
+-rname "GlobalUserDisabled" -rvalue 1
+
+Write-Host "LetAppsRunInBackground:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" `
+-rname "LetAppsRunInBackground" -rvalue 2
+
+Write-Host
+Write-Host
+Write-Host
+
+# Feedback notifications block
+$BLOCKFN = @"
+//////////////////////////////
+///FEEDBACK NOTIFICATIONS ///
+////////////////////////////
+"@
+
+Write-Host $BLOCKFN -ForegroundColor blue
+
+Write-Host "System initiated user feedback programed prompts" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" `
+-rname "NumberOfSIUFInPeriod" -rvalue 0
+
+Write-Host
+
+Write-Host "System initiated user feedback programed period (in days)" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" `
+-rname "PeriodInDays" -rvalue 0
+
+Write-Host
+
+Write-Host "DoNotShowFeedbackNotifications status:" -ForegroundColor blue
+
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
+-rname "DoNotShowFeedbackNotifications" -rvalue 1
+
+Write-Host
+
+Write-Host "Notification Task status:" -ForegroundColor blue
+Task-Disabling -tskname "Notification Task" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
+
+Write-Host
+
+Write-Host "DmClient status:" -ForegroundColor blue
+Task-Disabling -tskname "DmClient" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
+
+Write-Host
+
+Write-Host "DmClientOnScenarioDownload status:" -ForegroundColor blue
+Task-Disabling -tskname "DmClientOnScenarioDownload" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
+
+Write-Host
+Write-Host
+Write-Host
+
+# Location tracking block
+$BLOCKLT = @"
+////////////////////////
+///LOCATION TRACKING///
+///////////////////////
+"@
+
+Write-Host $BLOCKLT -ForegroundColor blue
+
+Write-Host "Location service status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" `
+-rname "Status" -rvalue 0
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> Location -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKLM ConsentStore -> Location -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "ConsentStore -> Location -> NonPackaged -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location\NonPackaged" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "SensorPermissionState status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" `
+-rname "SensorPermissionState" -rvalue 0
+
+Write-Host
+
+Write-Host "DisableLocation status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors" `
+-rname "DisableLocation" -rvalue 1
+
+Write-Host
+
+Write-Host "DisableLocationScripting status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors" `
+-rname "DisableLocationScripting" -rvalue 1
+
+Write-Host
+
+Write-Host "DisableWindowsLocationProvider status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors" `
+-rname "DisableWindowsLocationProvider" -rvalue 1
 
 Write-Host
 Write-Host
@@ -671,53 +956,6 @@ Write-Host
 Write-Host
 Write-Host
 
-# Feedback notifications block
-$BLOCKFN = @"
-//////////////////////////////
-///FEEDBACK NOTIFICATIONS ///
-////////////////////////////
-"@
-
-Write-Host $BLOCKFN -ForegroundColor blue
-
-Write-Host "System initiated user feedback programed prompts" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" `
--rname "NumberOfSIUFInPeriod" -rvalue 0
-
-Write-Host
-
-Write-Host "System initiated user feedback programed period (in days)" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" `
--rname "PeriodInDays" -rvalue 0
-
-Write-Host
-
-Write-Host "DoNotShowFeedbackNotifications status:" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
--rname "DoNotShowFeedbackNotifications" -rvalue 1
-
-Write-Host
-
-Write-Host "Notification Task status:" -ForegroundColor blue
-Task-Disabling -tskname "Notification Task" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
-
-Write-Host
-
-Write-Host "DmClient status:" -ForegroundColor blue
-Task-Disabling -tskname "DmClient" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
-
-Write-Host
-
-Write-Host "DmClientOnScenarioDownload status:" -ForegroundColor blue
-Task-Disabling -tskname "DmClientOnScenarioDownload" -tskpath "\Microsoft\Windows\Feedback\Siuf\"
-
-Write-Host
-Write-Host
-Write-Host
-
 # Windows customer experience improvement program CEIP block
 $BLOCKCEIP = @"
 //////////////////////////////////////////////////////////////
@@ -786,44 +1024,7 @@ Write-Host
 Write-Host
 Write-Host
 
-# Location tracking block
-$BLOCKLT = @"
-////////////////////////
-///LOCATION TRACKING///
-///////////////////////
-"@
 
-Write-Host $BLOCKLT -ForegroundColor blue
-
-Write-Host "Location service status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" `
--rname "Status" -rvalue 0
-
-Write-Host
-
-Write-Host "ConsentStore -> Location -> Value status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" `
--rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
-
-Write-Host
-
-Write-Host "SensorPermissionState status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" `
--rname "SensorPermissionState" -rvalue 0
-
-Write-Host
-
-Write-Host "DisableLocation status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors" `
--rname "DisableLocation" -rvalue 1
-
-Write-Host "DisableLocationScripting status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors" `
--rname "DisableLocationScripting" -rvalue 1
-
-Write-Host
-Write-Host
-Write-Host
 
 # Cortana block
 $BLOCKCORTANA = @"
@@ -836,22 +1037,10 @@ Write-Host $BLOCKCORTANA -ForegroundColor blue
 
 # CORTANA BLOCK
 
-# Background apps block
-$BLOCKBA = @"
-///////////////////////
-///BACKGROUND APPS ///
-/////////////////////
-"@
 
-Write-Host $BLOCKBA -ForegroundColor blue
 
-Write-Host "GlobalUserDisabled:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications" `
--rname "GlobalUserDisabled" -rvalue 1
+# CORT ANA HERE
 
-Write-Host
-Write-Host
-Write-Host
 
 # App install restrictions block
 $BLOCKAIR = @"
@@ -865,30 +1054,6 @@ Write-Host $BLOCKAIR -ForegroundColor blue
 Write-Host "DisallowAppInstall:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer" `
 -rname "DisallowAppInstall" -rvalue 0
-
-Write-Host
-Write-Host
-Write-Host
-
-# Activity history block
-$BLOCKAH = @"
-////////////////////////
-///ACTIVITY HISTORY ///
-//////////////////////
-"@
-
-Write-Host $BLOCKAH -ForegroundColor blue
-
-Write-Host "PublishUserActivities status:" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" `
--rname "PublishUserActivities" -rvalue 0
-
-Write-Host
-
-Write-Host "UploadUserActivities status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" `
--rname "UploadUserActivities" -rvalue 0
 
 Write-Host
 Write-Host
@@ -1024,38 +1189,6 @@ Write-Host "DisableWindowsConsumerFeatures:" -ForegroundColor blue
 
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
 -rname "DisableWindowsConsumerFeatures" -rvalue 1
-
-Write-Host
-
-Write-Host "HKLM LetAppsAccessAccountInfo:" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\Windows\AppPrivacy" `
--rname "LetAppsAccessAccountInfo" -rvalue 2
-
-Write-Host
-
-Write-Host "HKCU LetAppsAccessAccountInfo:" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppPrivacy" `
--rname "LetAppsAccessAccountInfo" -rvalue 2
-
-Write-Host
-
-Write-Host "ConsentStore -> userAccountInformation -> Value status:" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" `
--rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
-
-Write-Host
-
-Write-Host "ConsentStore -> userAccountInformation -> Value status:" -ForegroundColor blue
-
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" `
--rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
-
-Write-Host "TailoredExperiencesWithDiagnosticDataEnabled status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" `
--rname "TailoredExperiencesWithDiagnosticDataEnabled" -rvalue 0
 
 # Scheduled tasks
 
