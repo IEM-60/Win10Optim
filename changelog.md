@@ -1,17 +1,19 @@
 # Win10Optim Changelog
 
-## Win10Optim 00.10.00-Beta - 2025-08-17
+## Win10Optim 00.11.00-Beta - 2025-08-20
+
+### Added:
+
+#### Option to disable the following registry keys:
+- HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics\Value
+- HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics\Value
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy\LetAppsGetDiagnosticInfo
+
+## Win10Optim 00.09.00-Beta - 2025-08-17
 
 ### Added:
 
 - Registry keys and blocks reorganization
-
-#### Option to disable the following registry keys:
-- HKCU:\Software\Microsoft\Input\TIPC\Enabled
-
-## Win10Optim 00.09.00-Beta - 2025-08-13
-
-### Added:
 
 #### Option to disable the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput\AllowLinguisticDataCollection
@@ -34,6 +36,7 @@
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\radios\Value
 - HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\radios\Value
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy\LetAppsRunInBackground
+- HKCU:\Software\Microsoft\Input\TIPC\Enabled
 
 ## Win10Optim 00.08.00-Beta - 2025-08-13
 

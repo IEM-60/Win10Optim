@@ -546,13 +546,34 @@ Write-Host
 # Background apps
 Write-Host ::: Background apps ::: -ForegroundColor Cyan
 
-Write-Host "GlobalUserDisabled:" -ForegroundColor blue
+Write-Host "GlobalUserDisabled status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications" `
 -rname "GlobalUserDisabled" -rvalue 1
 
-Write-Host "LetAppsRunInBackground:" -ForegroundColor blue
+Write-Host "LetAppsRunInBackground status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" `
 -rname "LetAppsRunInBackground" -rvalue 2
+
+Write-Host
+
+# App diagnostics
+Write-Host ::: App diagnostics ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> appDiagnostics -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> appDiagnostics -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "LetAppsGetDiagnosticInfo status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" `
+-rname "LetAppsGetDiagnosticInfo" -rvalue 2
 
 Write-Host
 Write-Host
