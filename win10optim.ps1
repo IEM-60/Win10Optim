@@ -1,7 +1,7 @@
 # Telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.10.00 - 2025-08-17
+# Version 00.12.00 - 2025-08-24
 
 # FUNCTIONS
 # Registry edit function
@@ -576,6 +576,66 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" `
 -rname "LetAppsGetDiagnosticInfo" -rvalue 2
 
 Write-Host
+
+# Documents
+Write-Host ::: Documents ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> documentsLibrary -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\documentsLibrary" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> documentsLibrary -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\documentsLibrary" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Pictures
+Write-Host ::: Pictures ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> picturesLibrary -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\picturesLibrary" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> picturesLibrary -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\picturesLibrary" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# Videos
+Write-Host ::: Videos ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> videosLibrary -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\videosLibrary" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> videosLibrary -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\videosLibrary" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+# File system
+Write-Host ::: File system ::: -ForegroundColor Cyan
+
+Write-Host "HKLM ConsentStore -> broadFileSystemAccess -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\broadFileSystemAccess" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
+
+Write-Host "HKCU ConsentStore -> broadFileSystemAccess -> Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\broadFileSystemAccess" `
+-rname "Value" -rvalue "Deny" -rtype ([Microsoft.Win32.RegistryValueKind]::String)
+
+Write-Host
 Write-Host
 Write-Host
 
@@ -890,8 +950,14 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimizati
 
 Write-Host
 
-Write-Host "AITEnable status:" -ForegroundColor Blue
+Write-Host "Windows\AppCompat\AITEnable status:" -ForegroundColor Blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" `
+-rname "AITEnable" -rvalue 0
+
+Write-Host
+
+Write-Host "AppCompatFlags\AIT\AITEnable status:" -ForegroundColor Blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\AIT\" `
 -rname "AITEnable" -rvalue 0
 
 Write-Host
@@ -1012,12 +1078,6 @@ Write-Host "Uploader" -ForegroundColor blue #Proabbly obsolete
 Task-Disabling -tskname "Uploader" -tskpath "\Microsoft\Windows\Customer Experience Improvement Program\"
 
 Write-Host
-
-Write-Host "Office CEIP status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Office\Common\ClientTelemetry" `
--rname "DisableTelemetry" -rvalue 1
-
-Write-Host
 Write-Host
 Write-Host
 
@@ -1040,6 +1100,11 @@ Write-Host "CortanaConsent status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" `
 -rname "CortanaConsent" -rvalue 0
 
+Write-Host
+
+Write-Host "ConnectedSearchUseWeb status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" `
+-rname "ConnectedSearchUseWeb" -rvalue 0
 
 Write-Host
 Write-Host
@@ -1193,23 +1258,29 @@ Write-Host $BLOCKMISC -ForegroundColor blue
 # Registry keys
 
 Write-Host "SilentInstalledAppsEnabled staus:" -ForegroundColor blue
-
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
 -rname "SilentInstalledAppsEnabled" -rvalue 0
 
 Write-Host
 
 Write-Host "AcceptedPrivacyPolicy status:" -ForegroundColor blue
-
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Personalization\Settings" `
 -rname "AcceptedPrivacyPolicy" -rvalue 0
 
 Write-Host
 
-Write-Host "DisableWindowsConsumerFeatures:" -ForegroundColor blue
-
+Write-Host "DisableWindowsConsumerFeatures status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
 -rname "DisableWindowsConsumerFeatures" -rvalue 1
+
+Write-Host
+
+Write-Host "Trick Windows into thinking telemetry data has been already uploaded" -ForegroundColor blue
+Write-Host "In order to prevent future telemetry uploads" -ForegroundColor blue
+Write-Host "HaveUploadedForTarget status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser" `
+-rname "HaveUploadedForTarget" -rvalue 1
+
 
 # Scheduled tasks
 
