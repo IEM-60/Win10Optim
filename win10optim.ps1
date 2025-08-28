@@ -1,7 +1,7 @@
 # Telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.12.00 - 2025-08-24
+# Version 00.14.00 - 2025-08-27
 
 # FUNCTIONS
 # Registry edit function
@@ -158,6 +158,18 @@ $INTRO = @"
 "@
 
 Write-Host $INTRO -ForegroundColor green
+
+# Check for admin rights
+$principal = [Security.Principal.WindowsPrincipal](
+    [Security.Principal.WindowsIdentity]::GetCurrent()
+)
+
+If (-not $principal.IsInRole(
+        [Security.Principal.WindowsBuiltInRole] "Administrator"
+    )) {
+    Write-Host "Please run this script with admin privileges" -ForegroundColor Red
+    return
+}
 
 Write-Host
 Write-Host
@@ -1052,8 +1064,14 @@ $BLOCKCEIP = @"
 
 Write-Host $BLOCKCEIP -ForegroundColor blue
 
-Write-Host "Enable CEIP status:" -ForegroundColor blue
+Write-Host "Policies CEIPEnable status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows" `
+-rname "CEIPEnable" -rvalue 0
+
+Write-Host
+
+Write-Host "Software CEIPEnable status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\SQMClient\Windows" `
 -rname "CEIPEnable" -rvalue 0
 
 Write-Host

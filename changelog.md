@@ -1,6 +1,18 @@
 # Win10Optim Changelog
 
-## Win10Optim 00.11.00-Beta - 2025-08-20
+## Win10Optim 00.13.00-Beta - 2025-08-25
+
+### Added:
+
+#### Option to disable the following registry keys:
+- HKLM:\SOFTWARE\Microsoft\SQMClient\Windows\CEIPEnable
+
+## Win10Optim 00.13.00-Beta - 2025-08-25
+
+### Added:
+- Admin privileges check
+
+## Win10Optim 00.12.00-Beta - 2025-08-24
 
 ### Added:
 
