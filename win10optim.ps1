@@ -1,7 +1,7 @@
 # Telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.14.00 - 2025-08-27
+# Version 00.15.00 - 2025-08-31
 
 # FUNCTIONS
 # Registry edit function
@@ -830,9 +830,14 @@ $BLOCKOFFICE = @"
 Write-Host $BLOCKOFFICE -ForegroundColor blue
 
 Write-Host "Microsoft Office DisableTelemetry status:" -ForegroundColor blue
-
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Office\Common\ClientTelemetry" `
 -rname "DisableTelemetry" -rvalue 1
+
+Write-Host
+
+Write-Host "HKCU sendcustomerdata status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU\Software\Policies\Microsoft\Office\16.0\Common" `
+-rname "sendcustomerdata" -rvalue 0
 
 Write-Host
 
@@ -980,9 +985,15 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" `
 
 Write-Host
 
-Write-Host "AutoLogger-Diagtrack-Listener Start status:" -ForegroundColor Blue
+Write-Host "Current control set AutoLogger-Diagtrack-Listener Start status:" -ForegroundColor Blue
 Edit-RegxDW -rpath "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" `
 -rname "Start" -rvalue 0
+
+Write-Host
+
+Write-Host "Current control set services DiagtTack Start status:" -ForegroundColor Blue
+Edit-RegxDW -rpath "HKLM:\SYSTEM\CurrentControlSet\Services\DiagTrack" `
+-rname "Start" -rvalue 4
 
 Write-Host
 

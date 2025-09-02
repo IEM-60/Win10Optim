@@ -1,6 +1,20 @@
 # Win10Optim Changelog
 
-## Win10Optim 00.13.00-Beta - 2025-08-25
+## Win10Optim 00.16.00-Beta - 2025-09-01
+
+### Added:
+
+#### Option to disable the following registry keys:
+- HKCU\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
+
+## Win10Optim 00.15.00-Beta - 2025-08-31
+
+### Added:
+
+#### Option to disable the following registry keys:
+- HKLM:\SYSTEM\CurrentControlSet\Services\DiagTrack\Start
+
+## Win10Optim 00.14.00-Beta - 2025-08-27
 
 ### Added:
 
