@@ -1,7 +1,7 @@
-# Telemetry remover and privacy optimizer script
+# Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.15.00 - 2025-08-31
+# Version 00.17.00 - 2025-09-07
 
 # FUNCTIONS
 # Registry edit function
@@ -137,7 +137,7 @@ $INTRO = @"
    - Check and disable: -
    - Win 10 Telemetry policies -
    - Preview build program -
-   - Microsoft Office Telemetry -
+   - Microsoft Office telemetry -
    - Unnecessary/privacy invasive processes -
    - Microsoft compatibility appraiser -
    - Feedback notifications -
@@ -828,18 +828,6 @@ $BLOCKOFFICE = @"
 ///////////////////////////////
 "@
 Write-Host $BLOCKOFFICE -ForegroundColor blue
-
-Write-Host "Microsoft Office DisableTelemetry status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Office\Common\ClientTelemetry" `
--rname "DisableTelemetry" -rvalue 1
-
-Write-Host
-
-Write-Host "HKCU sendcustomerdata status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU\Software\Policies\Microsoft\Office\16.0\Common" `
--rname "sendcustomerdata" -rvalue 0
-
-Write-Host
 
 Write-Host "OfficeTelemetryAgentFallBack status:" -ForegroundColor blue
 Task-Disabling -tskname "OfficeTelemetryAgentFallBack" -tskpath "\Microsoft\Office\"

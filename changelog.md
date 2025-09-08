@@ -1,5 +1,14 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.17.00-Beta - 2025-09-07
+
+### Added:
+
+- Branched off the Microsoft Office telemetry section to a separate script
+
+#### Option to disable the following registry keys:
+- HKLM\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
+
 ## Win10Optim 00.16.00-Beta - 2025-09-01
 
 ### Added:
