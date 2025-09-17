@@ -1,20 +1,37 @@
 # Win10Optim Changelog
 
-## Win10Optim 00.17.00-Beta - 2025-09-07
+## Win10Optim 00.18.01-Beta - 2025-09-16
+
+### Added:
+
+- Reintegrated Microsoft Office section to the main script
+
+#### Option to disable the following registry keys:
+- HKCU:\Software\Policies\Microsoft\Office\16.0\OSM\EnableLogging
+- HKCU:\Software\Policies\Microsoft\Office\16.0\OSM\EnableUpload
+- HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry\DisableTelemetry
+- HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry\VerboseLogging
+- HKCU:\Software\Microsoft\Office\16.0\Common\Feedback\enabled
+- HKCU:\Software\Microsoft\Office\16.0\Common\Feedback\includescreenshot
+- HKCU:\Software\Microsoft\Office\16.0\Outlook\Options\Mail\EnableLogging
+- HKCU:\Software\Microsoft\Office\16.0\Word\Options\EnableLogging
+- HKCU:\Software\Microsoft\Office\16.0\Common\ptwatson\ptwoptin
+
+## Win10Optim 00.17.01-Beta - 2025-09-07
 
 ### Added:
 
 - Branched off the Microsoft Office telemetry section to a separate script
 
 #### Option to disable the following registry keys:
-- HKLM\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
+- HKLM:\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
 
 ## Win10Optim 00.16.00-Beta - 2025-09-01
 
 ### Added:
 
 #### Option to disable the following registry keys:
-- HKCU\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
+- HKCU:\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
 
 ## Win10Optim 00.15.00-Beta - 2025-08-31
 

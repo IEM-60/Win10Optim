@@ -1,7 +1,7 @@
 # Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.17.00 - 2025-09-07
+# Version 00.18.01 - 2025-09-16
 
 # FUNCTIONS
 # Registry edit function
@@ -182,7 +182,7 @@ $backupFolder = "C:\Backups"
 # Notice
 Write-Host "NOTICE: This script will let you alter important system settings like:" -ForegroundColor Yellow
 Write-Host "Registry entries, services, scheduled tasks and policies." -ForegroundColor Yellow
-Write-Host "It's strongly recommended to create a restore point for your system and a registry backup." -ForegroundColor Yellow
+Write-Host "It's strongly recommended to create a restore point and a registry backup for your system." -ForegroundColor Yellow
 Write-Host "Before starting making changes, the script will let you create both if you choose to." -ForegroundColor Yellow
 
 Write-Host
@@ -829,6 +829,80 @@ $BLOCKOFFICE = @"
 "@
 Write-Host $BLOCKOFFICE -ForegroundColor blue
 
+Write-Host "HKCU policies sendcustomerdata status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\Common" `
+-rname "sendcustomerdata" -rvalue 0
+
+Write-Host
+
+Write-Host "HKCU sendcustomerdata status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common" `
+-rname "sendcustomerdata" -rvalue 0
+
+Write-Host
+
+Write-Host "Microsoft Office DisableTelemetry status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Office\Common\ClientTelemetry" `
+-rname "DisableTelemetry" -rvalue 1
+
+Write-Host
+
+Write-Host "Microsoft Office 16.0 DisableTelemetry status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry" `
+-rname "DisableTelemetry" -rvalue 1
+
+Write-Host
+
+Write-Host "EnableLogging status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\OSM" `
+-rname "EnableLogging" -rvalue 0
+
+Write-Host
+
+Write-Host "EnableUpload status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\OSM" `
+-rname "EnableUpload" -rvalue 0
+
+Write-Host
+
+Write-Host "VerboseLogging status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry" `
+-rname "VerboseLogging" -rvalue 0
+
+Write-Host
+
+Write-Host "Feedback\enabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\Feedback" `
+-rname "enabled" -rvalue 0
+
+Write-Host
+
+Write-Host "includescreenshot status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\Feedback" `
+-rname "includescreenshot" -rvalue 0
+
+Write-Host
+
+Write-Host "Outlook EnableLogging status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Outlook\Options\Mail" `
+-rname "EnableLogging" -rvalue 0
+
+Write-Host
+
+Write-Host "Word EnableLogging status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Word\Options" `
+-rname "EnableLogging" -rvalue 0
+
+Write-Host
+
+Write-Host "ptwoptin status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ptwatson" `
+-rname "ptwoptin" -rvalue 0
+
+Write-Host
+
+# Tasks
+
 Write-Host "OfficeTelemetryAgentFallBack status:" -ForegroundColor blue
 Task-Disabling -tskname "OfficeTelemetryAgentFallBack" -tskpath "\Microsoft\Office\"
 
@@ -1236,6 +1310,78 @@ Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Adv
 Write-Host
 Write-Host
 Write-Host
+
+# Office block
+$BLOCKOFFICE = @"
+/////////////////////////////////
+///MICROSOFT OFFICE TELEMETRY///
+///////////////////////////////
+"@
+Write-Host $BLOCKOFFICE -ForegroundColor blue
+
+Write-Host "HKCU policies sendcustomerdata status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\Common" `
+-rname "sendcustomerdata" -rvalue 0
+
+Write-Host
+
+Write-Host "HKCU sendcustomerdata status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common" `
+-rname "sendcustomerdata" -rvalue 0
+
+Write-Host
+
+Write-Host "Microsoft Office DisableTelemetry status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Office\Common\ClientTelemetry" `
+-rname "DisableTelemetry" -rvalue 1
+
+Write-Host
+
+Write-Host "Microsoft Office 16.0 DisableTelemetry status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry" `
+-rname "DisableTelemetry" -rvalue 1
+
+Write-Host
+
+Write-Host "EnableLogging status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\OSM" `
+-rname "EnableLogging" -rvalue 0
+
+Write-Host
+
+Write-Host "EnableUpload status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\OSM" `
+-rname "EnableUpload" -rvalue 0
+
+Write-Host
+
+Write-Host "VerboseLogging status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry" `
+-rname "VerboseLogging" -rvalue 0
+
+Write-Host
+
+Write-Host "Feedback\enabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\Feedback" `
+-rname "enabled" -rvalue 0
+
+Write-Host
+
+Write-Host "includescreenshot status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry" `
+-rname "includescreenshot" -rvalue 0
+
+Write-Host
+
+# Tasks
+
+Write-Host "OfficeTelemetryAgentFallBack status:" -ForegroundColor blue
+Task-Disabling -tskname "OfficeTelemetryAgentFallBack" -tskpath "\Microsoft\Office\"
+
+Write-Host
+
+Write-Host "OfficeTelemetryAgentLogOn status:" -ForegroundColor blue
+Task-Disabling -tskname "OfficeTelemetryAgentLogOn" -tskpath "\Microsoft\Office\"
 
 # Parental control block
 $BLOCKPC = @"
