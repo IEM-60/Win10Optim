@@ -1,5 +1,21 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.19.01-Beta - 2025-09-17
+
+### Added:
+
+#### Option to disable the following registry keys:
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\pptsolution
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\olksolution
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\wdsolution
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\xlsolution
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\agave
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\appaddins
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\comaddins
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\documentfiles
+-HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\templatefiles
+-HKCU:\System\GameConfigStore\GameDVR_Enabled
+
 ## Win10Optim 00.18.01-Beta - 2025-09-16
 
 ### Added:

@@ -1,7 +1,7 @@
 # Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.18.01 - 2025-09-16
+# Version 00.19.01 - 2025-09-17
 
 # FUNCTIONS
 # Registry edit function
@@ -901,6 +901,56 @@ Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ptwatson" `
 
 Write-Host
 
+# Prevented applications from interacting with the telemetry agent
+
+Write-Host "pptsolution status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications" `
+-rname "pptsolution" -rvalue 1
+
+Write-Host
+
+Write-Host "olksolution status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications" `
+-rname "olksolution" -rvalue 1
+
+Write-Host
+
+Write-Host "wdsolution status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications" `
+-rname "wdsolution" -rvalue 1
+
+Write-Host
+
+Write-Host "xlsolution status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications" `
+-rname "xlsolution" -rvalue 1
+
+Write-Host
+
+Write-Host "agave status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications" `
+-rname "agave" -rvalue 1
+
+Write-Host
+
+Write-Host "comaddins status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications" `
+-rname "comaddins" -rvalue 1
+
+Write-Host
+
+Write-Host "documentfiles status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications" `
+-rname "documentfiles" -rvalue 1
+
+Write-Host
+
+Write-Host "templatefiles status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications" `
+-rname "templatefiles" -rvalue 1
+
+Write-Host
+
 # Tasks
 
 Write-Host "OfficeTelemetryAgentFallBack status:" -ForegroundColor blue
@@ -1311,78 +1361,6 @@ Write-Host
 Write-Host
 Write-Host
 
-# Office block
-$BLOCKOFFICE = @"
-/////////////////////////////////
-///MICROSOFT OFFICE TELEMETRY///
-///////////////////////////////
-"@
-Write-Host $BLOCKOFFICE -ForegroundColor blue
-
-Write-Host "HKCU policies sendcustomerdata status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\Common" `
--rname "sendcustomerdata" -rvalue 0
-
-Write-Host
-
-Write-Host "HKCU sendcustomerdata status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common" `
--rname "sendcustomerdata" -rvalue 0
-
-Write-Host
-
-Write-Host "Microsoft Office DisableTelemetry status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Office\Common\ClientTelemetry" `
--rname "DisableTelemetry" -rvalue 1
-
-Write-Host
-
-Write-Host "Microsoft Office 16.0 DisableTelemetry status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry" `
--rname "DisableTelemetry" -rvalue 1
-
-Write-Host
-
-Write-Host "EnableLogging status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\OSM" `
--rname "EnableLogging" -rvalue 0
-
-Write-Host
-
-Write-Host "EnableUpload status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\OSM" `
--rname "EnableUpload" -rvalue 0
-
-Write-Host
-
-Write-Host "VerboseLogging status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry" `
--rname "VerboseLogging" -rvalue 0
-
-Write-Host
-
-Write-Host "Feedback\enabled status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\Feedback" `
--rname "enabled" -rvalue 0
-
-Write-Host
-
-Write-Host "includescreenshot status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry" `
--rname "includescreenshot" -rvalue 0
-
-Write-Host
-
-# Tasks
-
-Write-Host "OfficeTelemetryAgentFallBack status:" -ForegroundColor blue
-Task-Disabling -tskname "OfficeTelemetryAgentFallBack" -tskpath "\Microsoft\Office\"
-
-Write-Host
-
-Write-Host "OfficeTelemetryAgentLogOn status:" -ForegroundColor blue
-Task-Disabling -tskname "OfficeTelemetryAgentLogOn" -tskpath "\Microsoft\Office\"
-
 # Parental control block
 $BLOCKPC = @"
 ///////////////////////
@@ -1444,6 +1422,17 @@ Write-Host "HaveUploadedForTarget status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser" `
 -rname "HaveUploadedForTarget" -rvalue 1
 
+Write-Host
+
+Write-Host "GameDVR_Enabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\System\GameConfigStore" `
+-rname "GameDVR_Enabled" -rvalue 0
+
+Write-Host
+
+Write-Host "GameDVR_FSEBehaviorMode status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\System\GameConfigStore" `
+-rname "GameDVR_FSEBehaviorMode" -rvalue 2
 
 # Scheduled tasks
 
