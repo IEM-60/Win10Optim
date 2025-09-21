@@ -1,7 +1,7 @@
 # Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.19.01 - 2025-09-17
+# Version 00.20.01 - 2025-09-20
 
 # FUNCTIONS
 # Registry edit function
@@ -135,26 +135,28 @@ $INTRO = @"
   \/_/\/_____/\/_/  \/_/\/_/    
 
    - Check and disable: -
-   - Win 10 Telemetry policies -
+   - Win 10 telemetry policies -
    - Preview build program -
    - Microsoft Office telemetry -
    - Unnecessary/privacy invasive processes -
    - Microsoft compatibility appraiser -
    - Feedback notifications -
    - Windows Customer Experience Improvement Program -
-   - Bing search and Cortana Consent - 
+   - Windows error reporting -  
+   - Bing search and Cortana consent - 
    - Location tracking - 
    - Advertising ID -
    - Tailored experiences -
    - Cortana -
-   - Typing collection - 
-   - Background apps - 
+   - Typing collection -
+   - Background apps -
    - App install restrictions -
-   - Activity history - 
+   - Activity history -
    - Tips, sugestions and ads -
    - Parental control -
    - Webcam -
    - Microphone -
+   - More privacy and performance oriented tweaks -
 "@
 
 Write-Host $INTRO -ForegroundColor green
@@ -1310,50 +1312,62 @@ Write-Host
 
 # Tips, sugestions and ads block
 $BLOCKTSA = @"
-////////////////////////////////
-///TIPS, SUGESTIONS AND ADS////
-//////////////////////////////
+///////////////////////////////////////////////////
+///TIPS, SUGESTIONS, ADS AND PREINSTALLED APPS////
+/////////////////////////////////////////////////
 "@
 
 Write-Host $BLOCKTSA -ForegroundColor blue
 
-Write-Host "SubscribedContent-338389Enabled staus:" -ForegroundColor blue
+Write-Host "SilentInstalledAppsEnabled staus:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
+-rname "SilentInstalledAppsEnabled" -rvalue 0
 
+Write-Host
+
+Write-Host "SubscribedContent-338389Enabled staus:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
 -rname "SubscribedContent-338389Enabled" -rvalue 0
 
 Write-Host
 
 Write-Host "SystemPaneSuggestionsEnabled staus:" -ForegroundColor blue
-
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
 -rname "SystemPaneSuggestionsEnabled" -rvalue 0
 
 Write-Host
 
 Write-Host "PreInstalledAppsEnabled staus:" -ForegroundColor blue
-
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
 -rname "PreInstalledAppsEnabled" -rvalue 0
 
 Write-Host
 
-Write-Host "ContentDeliveryAllowed staus:" -ForegroundColor blue
+Write-Host "OemPreInstalledAppsEnabled staus:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
+-rname "OemPreInstalledAppsEnabled" -rvalue 0
 
+Write-Host
+
+Write-Host "ContentDeliveryAllowed staus:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
 -rname "ContentDeliveryAllowed" -rvalue 0
 
 Write-Host
 
-Write-Host "SoftLandingEnabled staus:" -ForegroundColor blue
+Write-Host "FeatureManagementEnabled staus:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
+-rname "FeatureManagementEnabled" -rvalue 0
 
+Write-Host
+
+Write-Host "SoftLandingEnabled staus:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
 -rname "SoftLandingEnabled" -rvalue 0
 
 Write-Host
 
 Write-Host "ShowSyncProviderNotifications staus:" -ForegroundColor blue
-
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
 -rname "ShowSyncProviderNotifications" -rvalue 0
 
@@ -1388,6 +1402,38 @@ Write-Host
 Write-Host
 
 # Miscellaneous privacy tweaks block
+$BLOCKWER = @"
+//////////////////////////////
+///WINDOWS ERROR REPORTING///
+////////////////////////////
+"@
+
+Write-Host $BLOCKWER -ForegroundColor blue
+
+Write-Host
+
+Write-Host "The registry modifications executed in this section will disable Windows error reporting from being sent to Microsoft." -ForegroundColor blue
+Write-Host "Logs for error reporting will still be generated locally." -ForegroundColor blue
+Write-Host "But the data contained in the local logs might be limited because of the following changes." -ForegroundColor blue
+Write-Host "If you would happen to need detailed error logging, try undoing the modifications in this section." -ForegroundColor blue
+
+Write-Host
+
+Write-Host "Disabled:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" `
+-rname "Disabled" -rvalue 1
+
+Write-Host
+
+Write-Host "DontSendAdditionalData:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" `
+-rname "DontSendAdditionalData" -rvalue 1
+
+Write-Host
+Write-Host
+Write-Host
+
+# Miscellaneous privacy tweaks block
 $BLOCKMISC = @"
 ////////////////////////////////////////////////
 ///MISCELLANEOUS PRIVACY / DEBLOATING TWEAKS///
@@ -1397,12 +1443,6 @@ $BLOCKMISC = @"
 Write-Host $BLOCKMISC -ForegroundColor blue
 
 # Registry keys
-
-Write-Host "SilentInstalledAppsEnabled staus:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" `
--rname "SilentInstalledAppsEnabled" -rvalue 0
-
-Write-Host
 
 Write-Host "AcceptedPrivacyPolicy status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Personalization\Settings" `
@@ -1430,9 +1470,27 @@ Edit-RegxDW -rpath "HKCU:\System\GameConfigStore" `
 
 Write-Host
 
-Write-Host "GameDVR_FSEBehaviorMode status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKCU:\System\GameConfigStore" `
--rname "GameDVR_FSEBehaviorMode" -rvalue 2
+Write-Host "DontReportInfectionInformation:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\MRT" `
+-rname "DontReportInfectionInformation" -rvalue 1
+
+Write-Host
+
+Write-Host "ModelDownloadAllowed:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Speech_OneCore\Preferences" `
+-rname "ModelDownloadAllowed" -rvalue 0
+
+Write-Host
+
+Write-Host "AutoDownload:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\WindowsStore" `
+-rname "AutoDownload" -rvalue 2
+
+Write-Host
+
+Write-Host "AutoDownload:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate" `
+-rname "AutoDownload" -rvalue 2
 
 # Scheduled tasks
 
