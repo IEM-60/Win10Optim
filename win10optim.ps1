@@ -1,7 +1,7 @@
 # Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.20.01 - 2025-09-20
+# Version 00.22.01 - 2025-09-21
 
 # FUNCTIONS
 # Registry edit function
@@ -161,6 +161,11 @@ $INTRO = @"
 
 Write-Host $INTRO -ForegroundColor green
 
+Write-Host
+
+Write-Host "Press any key to continue" -ForegroundColor Green
+[void][System.Console]::ReadKey($true)
+
 # Check for admin rights
 $principal = [Security.Principal.WindowsPrincipal](
     [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -182,7 +187,8 @@ $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $backupFolder = "C:\Backups"
 
 # Notice
-Write-Host "NOTICE: This script will let you alter important system settings like:" -ForegroundColor Yellow
+Write-Host "WARNING:" -ForegroundColor Red
+Write-Host "This script will let you alter important system settings like:" -ForegroundColor Yellow
 Write-Host "Registry entries, services, scheduled tasks and policies." -ForegroundColor Yellow
 Write-Host "It's strongly recommended to create a restore point and a registry backup for your system." -ForegroundColor Yellow
 Write-Host "Before starting making changes, the script will let you create both if you choose to." -ForegroundColor Yellow
@@ -1430,6 +1436,18 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" `
 -rname "DontSendAdditionalData" -rvalue 1
 
 Write-Host
+
+Write-Host "DefaultConsent:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent" `
+-rname "DefaultConsent" -rvalue 1
+
+Write-Host
+
+Write-Host "NewUserDefaultConsent:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent" `
+-rname "NewUserDefaultConsent" -rvalue 1
+
+Write-Host
 Write-Host
 Write-Host
 
@@ -1470,27 +1488,33 @@ Edit-RegxDW -rpath "HKCU:\System\GameConfigStore" `
 
 Write-Host
 
-Write-Host "DontReportInfectionInformation:" -ForegroundColor blue
+Write-Host "DontReportInfectionInformation status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\MRT" `
 -rname "DontReportInfectionInformation" -rvalue 1
 
 Write-Host
 
-Write-Host "ModelDownloadAllowed:" -ForegroundColor blue
+Write-Host "ModelDownloadAllowed status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Speech_OneCore\Preferences" `
 -rname "ModelDownloadAllowed" -rvalue 0
 
 Write-Host
 
-Write-Host "AutoDownload:" -ForegroundColor blue
+Write-Host "AutoDownload status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\WindowsStore" `
 -rname "AutoDownload" -rvalue 2
 
 Write-Host
 
-Write-Host "AutoDownload:" -ForegroundColor blue
+Write-Host "AutoDownload status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate" `
 -rname "AutoDownload" -rvalue 2
+
+Write-Host
+
+Write-Host "SubmitSamplesConsent status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet\" `
+-rname "SubmitSamplesConsent" -rvalue 2
 
 # Scheduled tasks
 

@@ -1,5 +1,16 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.22.01-Beta - 2025-09-21
+
+### Added:
+- Branching off a Windows Defender Spynet block to modify specifically:
+
+#### Option to disable the following registry keys:
+- HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent\DefaultConsent
+- HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent\NewUserDefaultConsent
+- HKLM:\SOFTWARE\Microsoft\Windows Defender\Spynet\SpyNetReporting
+- HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet\SubmitSamplesConsent
+
 ## Win10Optim 00.21.01-Beta - 2025-09-20
 
 ### Added:
