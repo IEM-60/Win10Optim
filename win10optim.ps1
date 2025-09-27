@@ -1514,7 +1514,7 @@ Write-Host
 
 Write-Host "SubmitSamplesConsent status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet\" `
--rname "SubmitSamplesConsent" -rvalue 2
+-rname "SubmitSamplesConsent" -rvalue 0
 
 # Scheduled tasks
 
@@ -1537,8 +1537,6 @@ Write-Host
 Nuke-Serv -ServName "RemoteRegistry"
 
 Nuke-Serv -ServName "WbioSrvc"
-
-
 
 
 # End of script

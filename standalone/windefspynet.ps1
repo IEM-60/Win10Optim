@@ -1,4 +1,4 @@
-# Windows Defender SpyNetReporting disabling standalone script
+# Microsoft Defender SpyNetReporting disabling standalone script
 # PowerShell 7 compatible / Must be run as administrator
 # You must manually disable tamper protection for this script to work
 # Author: IEMV
@@ -93,7 +93,7 @@ $INTRO = @"
  \ \_\ \_____\ \_\ \ \_\ \__|   
   \/_/\/_____/\/_/  \/_/\/_/    
 
-   - Windows Defender SpyNetReporting disabling standalone script -
+   - Microsoft Defender SpyNetReporting disabling standalone script -
 "@
 
 Write-Host $INTRO -ForegroundColor green
@@ -103,7 +103,7 @@ $principal = [Security.Principal.WindowsPrincipal](
     [Security.Principal.WindowsIdentity]::GetCurrent()
 )
 
-If (-not $principal.IsInRole(
+if (-not $principal.IsInRole(
         [Security.Principal.WindowsBuiltInRole] "Administrator"
     )) {
     Write-Host "Please run this script with admin privileges" -ForegroundColor Red
@@ -177,7 +177,67 @@ Write-Host "Press any key to continue" `
 
 [void][System.Console]::ReadKey($true)
 
-# Miscellaneous privacy tweaks block
+Write-Host 
+
+Write-Host "Launching Windows Defender settings..." `
+-ForegroundColor blue
+Write-Host "Please disable tamper protection if you want to continue." `
+-ForegroundColor blue
+Write-Host "You can reenable it immediately after running the script." `
+-ForegroundColor blue
+
+Start-Process "windowsdefender://threatsettings"
+
+Write-Host 
+
+Write-Host "Disable protection and press any key when ready" `
+-ForegroundColor blue
+
+[void][System.Console]::ReadKey($true)
+
+# Tamper protection check
+
+$TamperProtect = (Get-MpComputerStatus).IsTamperProtected
+
+if ($TamperProtect){
+	Write-Host 
+	Write-Host "Tamper protection enabled. The script can't run" `
+	-ForegroundColor magenta
+	return
+}
+
+# Disable real-time and cloud-delivered protection
+
+Set-MpPreference -DisableRealtimeMonitoring $true
+Set-MpPreference -MAPSReporting Disabled
+
+Write-Host "Disabling protection, please wait..." -ForegroundColor blue 
+
+Start-Sleep -Seconds 6
+
+# Real-time protection check
+
+$RTimeProtect = (Get-MpComputerStatus).RealTimeProtectionEnabled
+
+if ($RTimeProtect){
+	Write-Host 
+	Write-Host "Real-time protection enabled. The script can't run" `
+	-ForegroundColor magenta
+	return
+}
+
+# Cloud-delivered protection check
+
+$CDeliveredProtect = (Get-MpPreference).MAPSReporting
+
+if (-not($CDeliveredProtect -eq 0)){
+	Write-Host 
+	Write-Host "Cloud-delivered protection enabled. The script can't run" `
+	-ForegroundColor magenta
+	return
+}
+
+# SpynetReporting disabling
 $BLOCKWDSR = @"
 ///////////////////////////////////////
 ///WINDOWS DEFENDER SPYNETREPORTING///
@@ -193,6 +253,15 @@ Write-Host
 Write-Host "SpyNetReporting status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows Defender\Spynet" `
 -rname "SpyNetReporting" -rvalue 0
+
+# Re-enable protection
+
+Set-MpPreference -DisableRealtimeMonitoring $false
+Set-MpPreference -MAPSReporting 2
+
+Write-Host "Re-enabling protection, please wait..." -ForegroundColor blue 
+
+Start-Sleep -Seconds 3
 
 # End of script
 
