@@ -1,7 +1,7 @@
 # Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.22.01 - 2025-09-21
+# Version 00.23.01 - 2025-09-28
 
 # FUNCTIONS
 # Registry edit function
@@ -1062,7 +1062,6 @@ Nuke-Serv -ServName "diagnosticshub.standardcollector.service"
 Nuke-Serv -ServName "WMPNetworkSvc"
 Nuke-Serv -ServName "dmwappushservice"
 
-
 # Updated status report
 Write-Host
 Write-Host
@@ -1133,6 +1132,8 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Tex
 
 Write-Host
 
+#Tasks
+
 Write-Host "GatherNetworkInfo status:" -ForegroundColor blue
 Task-Disabling -tskname "GatherNetworkInfo" -tskpath "\Microsoft\Windows\NetTrace\"
 
@@ -1155,6 +1156,16 @@ Write-Host
 
 Write-Host "BthSQM status:" -ForegroundColor blue
 Task-Disabling -tskname "BthSQM" -tskpath "\Microsoft\Windows\Bluetooth\"
+
+Write-Host
+
+Write-Host "AitAgent status:" -ForegroundColor blue
+Task-Disabling -tskname "AitAgent" -tskpath "\Microsoft\Windows\Application Experience\"
+
+Write-Host
+
+Write-Host "Microsoft Compatibility Appraiser status:" -ForegroundColor blue
+Task-Disabling -tskname "Microsoft Compatibility Appraiser" -tskpath "\Microsoft\Windows\Application Experience\"
 
 Write-Host
 Write-Host
@@ -1225,6 +1236,11 @@ Write-Host
 
 Write-Host "Uploader" -ForegroundColor blue #Proabbly obsolete
 Task-Disabling -tskname "Uploader" -tskpath "\Microsoft\Windows\Customer Experience Improvement Program\"
+
+Write-Host
+
+Write-Host "HypervisorFlightingTask" -ForegroundColor blue #Proabbly obsolete
+Task-Disabling -tskname "HypervisorFlightingTask" -tskpath "\Microsoft\Windows\Customer Experience Improvement Program\"
 
 Write-Host
 Write-Host
@@ -1529,6 +1545,33 @@ Write-Host
 Write-Host "MapsUpdateTask status:" -ForegroundColor blue
 
 Task-Disabling -tskname "MapsUpdateTask" -tskpath "\Microsoft\Windows\Maps\"
+
+Write-Host
+
+Write-Host "MapsUpdateTask status:" -ForegroundColor blue
+
+Task-Disabling -tskname "MapsUpdateTask" -tskpath "\Microsoft\Windows\Maps\"
+
+Write-Host
+
+Write-Host "SpeechModelDownloadTask status:" -ForegroundColor blue
+
+Task-Disabling -tskname "SpeechModelDownloadTask" -tskpath "\Microsoft\Windows\Speech\"
+
+Write-Host
+
+Write-Host "RefreshCache status:" -ForegroundColor blue
+Task-Disabling -tskname "RefreshCache" -tskpath "\Microsoft\Windows\Flighting\OneSettings\"
+
+Write-Host
+
+Write-Host "LoginCheck status:" -ForegroundColor blue
+Task-Disabling -tskname "LoginCheck" -tskpath "\Microsoft\Windows\PushToInstall\"
+
+Write-Host
+
+Write-Host "Registration status:" -ForegroundColor blue
+Task-Disabling -tskname "Registration" -tskpath "\Microsoft\Windows\PushToInstall\"
 
 # Services
 

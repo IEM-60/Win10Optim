@@ -1,5 +1,18 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.23.01-Beta - 2025-09-28
+
+### Added:
+
+#### Option to disable the following scheduled tasks:
+- HypervisorFlightingTask
+- Microsoft Compatibility Appraiser
+- AitAgent
+- RefreshCache
+- LoginCheck
+- Registration
+- SpeechModelDownloadTask
+
 ## Win10Optim 00.22.01-Beta - 2025-09-21
 
 ### Added:
