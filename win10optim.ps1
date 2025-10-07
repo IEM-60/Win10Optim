@@ -1,7 +1,7 @@
 # Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.23.01 - 2025-09-28
+# Version 00.24.01 - 2025-10-05
 
 # FUNCTIONS
 # Registry edit function
@@ -1098,6 +1098,12 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompat
 
 Write-Host
 
+Write-Host "DisableInventory status:" -ForegroundColor Blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" `
+-rname "DisableInventory" -rvalue 1
+
+Write-Host
+
 Write-Host "DisableUAR status:" -ForegroundColor Blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" `
 -rname "DisableUAR" -rvalue 1
@@ -1302,7 +1308,7 @@ $BLOCKAIR = @"
 
 Write-Host $BLOCKAIR -ForegroundColor blue
 
-Write-Host "DisallowAppInstall:" -ForegroundColor blue
+Write-Host "DisallowAppInstall status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer" `
 -rname "DisallowAppInstall" -rvalue 0
 
@@ -1318,6 +1324,18 @@ $BLOCKWS = @"
 "@
 
 Write-Host $BLOCKWS -ForegroundColor blue
+
+Write-Host "DisableWebSearch status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search\" `
+-rname "DisableWebSearch" -rvalue 1
+
+Write-Host
+
+Write-Host "DisableIndexing status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search\" `
+-rname "DisableIndexing" -rvalue 1
+
+Write-Host
 
 Nuke-Serv -ServName "WSearch"
 
@@ -1490,6 +1508,18 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
 
 Write-Host
 
+Write-Host "DisableWindowsSpotlightFeatures status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
+-rname "DisableWindowsSpotlightFeatures" -rvalue 1
+
+Write-Host
+
+Write-Host "AllowSuggestedAppsInWindowsInkWorkspace status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace" `
+-rname "AllowSuggestedAppsInWindowsInkWorkspace" -rvalue 1
+
+Write-Host
+
 Write-Host "Trick Windows into thinking telemetry data has been already uploaded" -ForegroundColor blue
 Write-Host "In order to prevent future telemetry uploads" -ForegroundColor blue
 Write-Host "HaveUploadedForTarget status:" -ForegroundColor blue
@@ -1501,6 +1531,12 @@ Write-Host
 Write-Host "GameDVR_Enabled status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\System\GameConfigStore" `
 -rname "GameDVR_Enabled" -rvalue 0
+
+Write-Host
+
+Write-Host "AllowGameDVR status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR\" `
+-rname "AllowGameDVR" -rvalue 0
 
 Write-Host
 

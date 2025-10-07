@@ -1,5 +1,16 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.24.01-Beta - 2025-10-05
+
+### Added:
+
+#### Option to disable the following registry keys:
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR\AllowGameDVR
+- HKLM\Software\Policies\Microsoft\WindowsInkWorkspace\AllowSuggestedAppsInWindowsInkWorkspace
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat\DisableInventory
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search\DisableIndexing
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search\DisableWebSearch
+
 ## Win10Optim 00.23.01-Beta - 2025-09-28
 
 ### Added:
