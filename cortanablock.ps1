@@ -46,5 +46,11 @@ Write-Host "ShowCortanaButton status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
 -rname "ShowCortanaButton" -rvalue 0
 
+Write-Host
+
+Write-Host "AllowCortanaAboveLock status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search" `
+-rname "AllowCortanaAboveLock" -rvalue 0
+
 
 

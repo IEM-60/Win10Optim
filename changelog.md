@@ -1,10 +1,31 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.25.02-Beta - 2025-10-19
+
+### Added:
+
+#### Option to modify the following registry keys:
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\Disabled
+- HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent
+- HKLM:\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting\ShowUI
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\DontSendAdditionalData
+- HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCloudSearch
+- HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowSearchToUseLocation
+- HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search\DisableRemovableDriveIndexing
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\EnableFeeds
+- HKLM:\SOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests\Value
+- HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds\ShellFeedsTaskbarViewMode
+- HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Microsoft-Windows-AssignedAccess-Trace\Start
+- HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\SetupPlatformTel\Start
+- HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent\DisableThirdPartySuggestions
+- HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent\DisableThirdPartySuggestions
+
+
 ## Win10Optim 00.24.01-Beta - 2025-10-05
 
 ### Added:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR\AllowGameDVR
 - HKLM\Software\Policies\Microsoft\WindowsInkWorkspace\AllowSuggestedAppsInWindowsInkWorkspace
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat\DisableInventory
@@ -29,7 +50,7 @@
 ### Added:
 - Branching off a Windows Defender Spynet block to modify specifically:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent\DefaultConsent
 - HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent\NewUserDefaultConsent
 - HKLM:\SOFTWARE\Microsoft\Windows Defender\Spynet\SpyNetReporting
@@ -41,7 +62,7 @@
 
 - Windows Error Reporting block
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Policies\Microsoft\MRT\DontReportInfectionInformation
 - HKLM:\SOFTWARE\Microsoft\Speech_OneCore\Preferences\ModelDownloadAllowed
 - HKLM:\SOFTWARE\Policies\Microsoft\WindowsStore\AutoDownload
@@ -52,17 +73,17 @@
 
 ### Added:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\FeatureManagementEnabled
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\OemPreInstalledAppsEnabled
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 
 ## Win10Optim 00.19.01-Beta - 2025-09-17
 
 ### Added:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\pptsolution
 - HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\olksolution
 - HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\wdsolution
@@ -80,7 +101,7 @@
 
 - Reintegrated Microsoft Office section to the main script
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKCU:\Software\Policies\Microsoft\Office\16.0\OSM\EnableLogging
 - HKCU:\Software\Policies\Microsoft\Office\16.0\OSM\EnableUpload
 - HKCU:\Software\Microsoft\Office\16.0\Common\ClientTelemetry\DisableTelemetry
@@ -97,28 +118,28 @@
 
 - Branched off the Microsoft Office telemetry section to a separate script
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
 
 ## Win10Optim 00.16.00-Beta - 2025-09-01
 
 ### Added:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKCU:\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
 
 ## Win10Optim 00.15.00-Beta - 2025-08-31
 
 ### Added:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SYSTEM\CurrentControlSet\Services\DiagTrack\Start
 
 ## Win10Optim 00.14.00-Beta - 2025-08-27
 
 ### Added:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\SQMClient\Windows\CEIPEnable
 
 ## Win10Optim 00.13.00-Beta - 2025-08-25
@@ -130,7 +151,7 @@
 
 ### Added:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\documentsLibrary\Value
 - HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\documentsLibrary\Value
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\picturesLibrary\Value
@@ -147,7 +168,7 @@
 
 ### Added:
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics\Value
 - HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics\Value
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy\LetAppsGetDiagnosticInfo
@@ -158,7 +179,7 @@
 
 - Registry keys and blocks reorganization
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput\AllowLinguisticDataCollection
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection\DisableDiagnosticDataViewer
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\System\EnableActivityFeed
@@ -187,7 +208,7 @@
 
 - Settings > Privacy block
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo\Enabled
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo\DisabledByGroupPolicy
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Start_TrackProgs
@@ -210,7 +231,7 @@
 #### Option to disable the following services:
 - WbioSrvc
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\Value
 - HKCU:\software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\Value
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone\Value
@@ -222,7 +243,7 @@
 ## Win10Optim 00.06.01-Beta - 2025-08-02
 
 ### Added:
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\AppPrivacy
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation
 
@@ -236,7 +257,7 @@
 #### Option to disable the following services:
 - RemoteRegistry
   
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\PreInstalledAppsEnabled
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\ContentDeliveryAllowed
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SoftLandingEnabled
@@ -261,7 +282,7 @@
 - \Microsoft\Windows\Autochk\Proxy
 - \Microsoft\Windows\Bluetooth\BthSQM
 
-#### Option to disable the following registry keys:
+#### Option to modify the following registry keys:
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SilentInstalledAppsEnabled
 - HKLM:\SYSTEM\CurrentControlSet\Services\dmwappushservice\start\
 

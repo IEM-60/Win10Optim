@@ -1,7 +1,7 @@
 # Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.24.01 - 2025-10-05
+# Version 00.25.03 - 2025-10-19
 
 # FUNCTIONS
 # Registry edit function
@@ -156,6 +156,7 @@ $INTRO = @"
    - Parental control -
    - Webcam -
    - Microphone -
+   - Windows activity feed -
    - More privacy and performance oriented tweaks -
 "@
 
@@ -1254,9 +1255,9 @@ Write-Host
 
 # Windows Bing search and Cortana Consent block
 $BLOCKBSCC = @"
-///////////////////////////////////////
-///BING SEARCH AND CORTANA CONSENT ///
-/////////////////////////////////////
+//////////////////////////////////////////
+///WINDOWS SEARCH AND CORTANA CONSENT ///
+////////////////////////////////////////
 "@
 
 Write-Host $BLOCKBSCC -ForegroundColor blue
@@ -1275,6 +1276,36 @@ Write-Host
 
 Write-Host "ConnectedSearchUseWeb status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" `
+-rname "ConnectedSearchUseWeb" -rvalue 0
+
+Write-Host
+
+Write-Host "AllowCloudSearch status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search" `
+-rname "AllowCloudSearch" -rvalue 0
+
+Write-Host
+
+Write-Host "AllowSearchToUseLocation status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search" `
+-rname "AllowSearchToUseLocation" -rvalue 0
+
+Write-Host
+
+Write-Host "AllowSearchToUseLocation status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search" `
+-rname "AllowSearchToUseLocation" -rvalue 0
+
+Write-Host
+
+Write-Host "DisableRemovableDriveIndexing status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search" `
+-rname "DisableRemovableDriveIndexing" -rvalue 1
+
+Write-Host
+
+Write-Host "ConnectedSearchUseWeb status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:SOFTWARE\Policies\Microsoft\Windows\Windows Search" `
 -rname "ConnectedSearchUseWeb" -rvalue 0
 
 Write-Host
@@ -1434,8 +1465,18 @@ Task-Disabling -tskname "FamilySafetyMonitor" -tskpath "\Microsoft\Windows\Shell
 
 Write-Host
 
+Write-Host "FamilySafetyMonitorToastTask status:" -ForegroundColor blue
+Task-Disabling -tskname "FamilySafetyMonitorToastTask" -tskpath "\Microsoft\Windows\Shell\"
+
+Write-Host
+
 Write-Host "FamilySafetyRefreshTask status:" -ForegroundColor blue
 Task-Disabling -tskname "FamilySafetyRefreshTask" -tskpath "\Microsoft\Windows\Shell\"
+
+Write-Host
+
+Write-Host "FamilySafetyRefresh status:" -ForegroundColor blue
+Task-Disabling -tskname "FamilySafetyRefresh" -tskpath "\Microsoft\Windows\Shell\"
 
 Write-Host
 Write-Host
@@ -1459,27 +1500,107 @@ Write-Host "If you would happen to need detailed error logging, try undoing the 
 
 Write-Host
 
-Write-Host "Disabled:" -ForegroundColor blue
+Write-Host "Disabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" `
+-rname "Disabled" -rvalue 1
+
+Write-Host
+
+Write-Host "Consent status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" `
+-rname "Consent" -rvalue 0
+
+Write-Host
+
+Write-Host "DontSendAdditionalData status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" `
+-rname "DontSendAdditionalData" -rvalue 0
+
+Write-Host
+
+Write-Host "ShowUI status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting" `
+-rname "ShowUI" -rvalue 1
+
+Write-Host
+
+Write-Host "Disabled status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" `
 -rname "Disabled" -rvalue 1
 
 Write-Host
 
-Write-Host "DontSendAdditionalData:" -ForegroundColor blue
+Write-Host "DontSendAdditionalData status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" `
 -rname "DontSendAdditionalData" -rvalue 1
 
 Write-Host
 
-Write-Host "DefaultConsent:" -ForegroundColor blue
+Write-Host "DefaultConsent status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent" `
 -rname "DefaultConsent" -rvalue 1
 
 Write-Host
 
-Write-Host "NewUserDefaultConsent:" -ForegroundColor blue
+Write-Host "NewUserDefaultConsent status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent" `
 -rname "NewUserDefaultConsent" -rvalue 1
+
+Write-Host
+Write-Host
+Write-Host
+
+# Windows activity feed
+$BLOCKWAF = @"
+////////////////////////////
+///WINDOWS ACTIVITY FEED///
+//////////////////////////
+"@
+
+Write-Host $BLOCKWAF -ForegroundColor blue
+
+# Registry keys
+
+Write-Host "EnableFeeds status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" `
+-rname "EnableFeeds" -rvalue 0
+
+Write-Host
+
+Write-Host "Value status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests" `
+-rname "Value" -rvalue 0
+
+Write-Host
+
+Write-Host "ShellFeedsTaskbarViewMode status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" `
+-rname "ShellFeedsTaskbarViewMode" -rvalue 0
+
+Write-Host
+Write-Host
+Write-Host
+
+# Windows autologger
+$BLOCKAL = @"
+/////////////////
+///AUTOLOGGER///
+///////////////
+"@
+
+Write-Host $BLOCKAL -ForegroundColor blue
+
+# Registry keys
+
+Write-Host "Microsoft-Windows-AssignedAccess-Trace Start status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Microsoft-Windows-AssignedAccess-Trace" `
+-rname "Start" -rvalue 0
+
+Write-Host
+
+Write-Host "SetupPlatformTel Start status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\SetupPlatformTel" `
+-rname "Start" -rvalue 0
 
 Write-Host
 Write-Host
@@ -1511,6 +1632,18 @@ Write-Host
 Write-Host "DisableWindowsSpotlightFeatures status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
 -rname "DisableWindowsSpotlightFeatures" -rvalue 1
+
+Write-Host
+
+Write-Host "DisableThirdPartySuggestions status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
+-rname "DisableThirdPartySuggestions" -rvalue 1
+
+Write-Host
+
+Write-Host "DisableThirdPartySuggestions status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
+-rname "DisableThirdPartySuggestions" -rvalue 1
 
 Write-Host
 
