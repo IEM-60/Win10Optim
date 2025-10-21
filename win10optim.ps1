@@ -1,7 +1,7 @@
 # Microsoft Office telemetry remover and privacy optimizer script
 # PowerShell 7 compatible / Must be run as administrator
 # Author: IEMV
-# Version 00.25.03 - 2025-10-19
+# Version 00.26.03 - 2025-10-20
 
 # FUNCTIONS
 # Registry edit function
@@ -868,6 +868,36 @@ Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\OSM" `
 
 Write-Host
 
+Write-Host "sendtelemetry status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\common\clienttelemetry" `
+-rname "sendtelemetry" -rvalue 1
+
+Write-Host
+
+Write-Host "usercontentdisabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy" `
+-rname "usercontentdisabled" -rvalue 1
+
+Write-Host
+
+Write-Host "downloadcontentdisabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy" `
+-rname "downloadcontentdisabled" -rvalue 1
+
+Write-Host
+
+Write-Host "controllerconnectedservicesenabled status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy" `
+-rname "controllerconnectedservicesenabled" -rvalue 1
+
+Write-Host
+
+Write-Host "disconnectedstate status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy" `
+-rname "disconnectedstate" -rvalue 1
+
+Write-Host
+
 Write-Host "EnableUpload status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Policies\Microsoft\Office\16.0\OSM" `
 -rname "EnableUpload" -rvalue 0
@@ -1635,13 +1665,13 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
 
 Write-Host
 
-Write-Host "DisableThirdPartySuggestions status:" -ForegroundColor blue
+Write-Host "HKML DisableThirdPartySuggestions status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
 -rname "DisableThirdPartySuggestions" -rvalue 1
 
 Write-Host
 
-Write-Host "DisableThirdPartySuggestions status:" -ForegroundColor blue
+Write-Host "HKCU DisableThirdPartySuggestions status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" `
 -rname "DisableThirdPartySuggestions" -rvalue 1
 
@@ -1700,6 +1730,12 @@ Write-Host
 Write-Host "SubmitSamplesConsent status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet\" `
 -rname "SubmitSamplesConsent" -rvalue 0
+
+Write-Host
+
+Write-Host "DisableOneSettingsDownloads status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\Software\Policies\Microsoft\Windows\DataCollection" `
+-rname "DisableOneSettingsDownloads" -rvalue 1
 
 # Scheduled tasks
 

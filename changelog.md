@@ -1,5 +1,17 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.26.02-Beta - 2025-10-20
+
+### Added:
+
+#### Option to modify the following registry keys:
+- HKCU:\Software\Policies\Microsoft\Office\16.0\common\clienttelemetry\sendtelemetry
+- HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy\usercontentdisabled
+- HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy\downloadcontentdisabled
+- HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy\controllerconnectedservicesenabled
+- HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy\disconnectedstate
+- HKLM:\Software\Policies\Microsoft\Windows\DataCollection\DisableOneSettingsDownloads
+
 ## Win10Optim 00.25.02-Beta - 2025-10-19
 
 ### Added:
