@@ -1,5 +1,19 @@
 # Win10Optim Changelog
 
+## Win10Optim 00.27.03-Beta - 2025-10-25
+
+### Added:
+
+#### Option to modify the following registry keys:
+- HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BackgroundAppGlobalToggle
+- HKLM:\SOFTWARE\Policies\Microsoft\Edge\StartupBoostEnabled
+- HKLM:\SOFTWARE\Policies\Microsoft\Edge\BackgroundModeEnabled
+- HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\DisableSearchBoxSuggestions
+- HKLM:\Software\Policies\Microsoft\Windows\WindowsCopilot\TurnOffWindowsCopilot
+- HKCU:\Software\Policies\Microsoft\Windows\WindowsCopilot\TurnOffWindowsCopilot
+
+***
+
 ## Win10Optim 00.26.02-Beta - 2025-10-20
 
 ### Added:
@@ -11,6 +25,8 @@
 - HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy\controllerconnectedservicesenabled
 - HKCU:\Software\Policies\Microsoft\office\16.0\common\privacy\disconnectedstate
 - HKLM:\Software\Policies\Microsoft\Windows\DataCollection\DisableOneSettingsDownloads
+
+***
 
 ## Win10Optim 00.25.02-Beta - 2025-10-19
 
@@ -32,6 +48,7 @@
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent\DisableThirdPartySuggestions
 - HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent\DisableThirdPartySuggestions
 
+***
 
 ## Win10Optim 00.24.01-Beta - 2025-10-05
 
@@ -43,6 +60,8 @@
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat\DisableInventory
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search\DisableIndexing
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search\DisableWebSearch
+
+***
 
 ## Win10Optim 00.23.01-Beta - 2025-09-28
 
@@ -57,6 +76,8 @@
 - Registration
 - SpeechModelDownloadTask
 
+***
+
 ## Win10Optim 00.22.01-Beta - 2025-09-21
 
 ### Added:
@@ -67,6 +88,8 @@
 - HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent\NewUserDefaultConsent
 - HKLM:\SOFTWARE\Microsoft\Windows Defender\Spynet\SpyNetReporting
 - HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet\SubmitSamplesConsent
+
+***
 
 ## Win10Optim 00.21.01-Beta - 2025-09-20
 
@@ -81,6 +104,8 @@
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate\AutoDownload
 - HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Disabled
 
+***
+
 ## Win10Optim 00.20.01-Beta - 2025-09-19
 
 ### Added:
@@ -89,7 +114,7 @@
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\FeatureManagementEnabled
 - HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\OemPreInstalledAppsEnabled
 
-#### Option to modify the following registry keys:
+***
 
 ## Win10Optim 00.19.01-Beta - 2025-09-17
 
@@ -107,6 +132,8 @@
 - HKCU:\Software\Microsoft\Office\16.0\OSM\preventedapplications\templatefiles
 - HKCU:\System\GameConfigStore\GameDVR_Enabled
 
+***
+
 ## Win10Optim 00.18.01-Beta - 2025-09-16
 
 ### Added:
@@ -123,6 +150,8 @@
 - HKCU:\Software\Microsoft\Office\16.0\Outlook\Options\Mail\EnableLogging
 - HKCU:\Software\Microsoft\Office\16.0\Word\Options\EnableLogging
 - HKCU:\Software\Microsoft\Office\16.0\Common\ptwatson\ptwoptin
+
+***
 
 ## Win10Optim 00.17.01-Beta - 2025-09-07
 
