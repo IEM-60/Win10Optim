@@ -162,12 +162,16 @@
 #### Option to modify the following registry keys:
 - HKLM:\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
 
+***
+
 ## Win10Optim 00.16.00-Beta - 2025-09-01
 
 ### Added:
 
 #### Option to modify the following registry keys:
 - HKCU:\Software\Policies\Microsoft\Office\16.0\Common\sendcustomerdata
+
+***
 
 ## Win10Optim 00.15.00-Beta - 2025-08-31
 
@@ -176,6 +180,8 @@
 #### Option to modify the following registry keys:
 - HKLM:\SYSTEM\CurrentControlSet\Services\DiagTrack\Start
 
+***
+
 ## Win10Optim 00.14.00-Beta - 2025-08-27
 
 ### Added:
@@ -183,10 +189,14 @@
 #### Option to modify the following registry keys:
 - HKLM:\SOFTWARE\Microsoft\SQMClient\Windows\CEIPEnable
 
+***
+
 ## Win10Optim 00.13.00-Beta - 2025-08-25
 
 ### Added:
 - Admin privileges check
+
+***
 
 ## Win10Optim 00.12.00-Beta - 2025-08-24
 
@@ -204,6 +214,8 @@
 - HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\ConnectedSearchUseWeb
 - HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\HaveUploadedForTarget
 - HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\AIT\AITEnable
+
+***
   
 ## Win10Optim 00.11.00-Beta - 2025-08-20
 
@@ -213,6 +225,8 @@
 - HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics\Value
 - HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics\Value
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy\LetAppsGetDiagnosticInfo
+
+***
 
 ## Win10Optim 00.09.00-Beta - 2025-08-17
 
@@ -242,6 +256,8 @@
 - HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\radios\Value
 - HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy\LetAppsRunInBackground
 - HKCU:\Software\Microsoft\Input\TIPC\Enabled
+
+***
 
 ## Win10Optim 00.08.00-Beta - 2025-08-13
 
