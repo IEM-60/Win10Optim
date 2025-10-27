@@ -17,14 +17,14 @@ You will run the script on your own responsibility and under the assumption that
 - Executing the script as administrator is 100% necessary.
 - Creating a registry backup and a restore point is **strongly recommended** (the script will offer the option to create both at the start) so you can revert the changes made in case of undesired results.
 - This script is written for usage in modern PowerShell 7. I'm not sure it will work on Windows PowerShell or PowerShell 5.
-- This script is interactive and will: 
-	1. Inform you of the target setting to be modified
-	2. Let you know your current setting
-	3. Ask you if you want to apply the proposed changes
+- This script is interactive and will:
+	- Inform you of the target setting to be modified
+ 	- Let you know your current setting
+	- Ask you if you want to apply the proposed changes
 - This is a privacy focused script and you might not want to apply every suggested change. Just to mention some examples, this script will suggest to:
-	1. Disable the microphone and webcam.
-	2. Disable indexing.
-	3. Disable all location services.
+	- Disable the microphone and webcam.
+	- Disable indexing.
+	- Disable all location services.
 	
 So please, don't rush to press **yes** to all, try to understand the changes you are making and use your backup in case something goes wrong. 
 
