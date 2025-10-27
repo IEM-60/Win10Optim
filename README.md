@@ -7,12 +7,12 @@ Win10Optim is an interactive PowerShell script designed to enhance the privacy a
 This script includes the tweaks I regularly use in new installations for myself, so this is very much a personal project built for my specific needs, but it is easily editable and customizable for your own preferences.
 The script focuses specially on limiting Microsoft Telemetry and not so much on debloating or uninstalling third-party apps, since I install Windows 10 N and spare myself from most bloatware that way.
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 I am not responsible for any damage, malfunction or undesired effects resulting from running this script in your system.
 You will run the script on your own responsibility and under the assumption that you understand the changes that are being made.
 
-## Important
+## ❗ Important
 
 - Executing the script as administrator is 100% necessary.
 - Creating a registry backup and a restore point is **strongly recommended** (the script will offer the option to create both at the start) so you can revert the changes made in case of undesired results.
@@ -28,7 +28,7 @@ You will run the script on your own responsibility and under the assumption that
 	
 So please, don't rush to press **yes** to all, try to understand the changes you are making and use your backup in case something goes wrong. 
 
-## Usage
+## 💻 Usage
 
 1. Execute PowerShell as administrator.
 2. Grant PowerShell the permission to run scripts from external sources:
@@ -42,5 +42,5 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 .\win10optim.ps1
 ```
 
-## Notice
+## 📣 Notice
 This is not a finished project and I'm working on making the script much more descriptive so it's easier to understand the proposed modifications.
