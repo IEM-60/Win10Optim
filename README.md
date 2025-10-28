@@ -3,6 +3,8 @@
 ![Static Badge](https://img.shields.io/badge/PowerShell-7%2B-blue?style=flat)
 ![Static Badge](https://img.shields.io/badge/Windows-10-brightgreen?style=flat)
 
+<img src="img/startscreen.png" alt="Win10Optim">
+
 Win10Optim is an interactive PowerShell script designed to enhance the privacy and performance of Windows 10 by disabling registry keys, services and scheduled tasks.
 This script includes the tweaks I regularly use in new installations for myself, so this is very much a personal project built for my specific needs, but it is easily editable and customizable for your own preferences.
 The script focuses specially on limiting Microsoft Telemetry and not so much on debloating or uninstalling third-party apps, since I install Windows 10 N and spare myself from most bloatware that way.
