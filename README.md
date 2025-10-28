@@ -30,14 +30,15 @@ So please, don't rush to press **yes** to all, try to understand the changes you
 
 ## 💻 Usage
 
-1. Execute PowerShell as administrator.
-2. Grant PowerShell the permission to run scripts from external sources:
+1. Download win10optim.ps1 from the release section or the zip from the code button
+2. Execute PowerShell as administrator.
+3. Grant PowerShell the permission to run scripts from external sources:
 
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 ```
 
-3. Locate yourself in the directory containing the script and run it.
+4. Locate yourself in the directory containing the script and run it.
 ```powershell
 .\win10optim.ps1
 ```
