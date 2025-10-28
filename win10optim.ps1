@@ -134,8 +134,9 @@ $INTRO = @"
  \ \_\ \_____\ \_\ \ \_\ \__|   
   \/_/\/_____/\/_/  \/_/\/_/    
 
-   - Check and disable: -
-   - Win 10 telemetry policies -
+	WIN10OPTIM
+     Check and disable:
+   - Windows 10 telemetry -
    - Preview build program -
    - Microsoft Office telemetry -
    - Unnecessary/privacy invasive processes -
