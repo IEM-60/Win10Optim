@@ -248,6 +248,11 @@ $BLOCKSETPRIV = @"
 
 Write-Host $BLOCKSETPRIV -ForegroundColor blue
 
+Write-Host
+Write-Host "This section will change the settings from the Settings > Privacy menu in Windows 10 and its sub-menus"
+Write-Host "The toggles are controlled by the following registry keys and basically everything will be disabled"
+Write-Host "All the settings disabled by the script through a policy, will left the toggle greyed out in the UI menu"
+
 # Windows permissions
 # General
 
@@ -256,30 +261,37 @@ Write-Host
 Write-Host ::: Windows permissions ::: -ForegroundColor Cyan
 Write-Host ::: General ::: -ForegroundColor Cyan
 
+Write-host "Path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -ForegroundColor Gray
 Write-Host "HKLM Advertising ID enabled status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" `
 -rname "Enabled" -rvalue 0
 
 Write-Host
 
+Write-host "Path: HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -ForegroundColor Gray
 Write-Host "HKCU Advertising ID enabled status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" `
 -rname "Enabled" -rvalue 0
 
 Write-Host
 
+Write-host "Path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" -ForegroundColor Gray
 Write-Host "Advertising ID DisabledByGroupPolicy status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" `
 -rname "DisabledByGroupPolicy" -rvalue 1
 
 Write-Host
 
+# Controls whether or no, Microsoft sends your preferred language to websites and web services
+Write-host "Path: HKCU:\Control Panel\International\User Profile" -ForegroundColor Gray
 Write-Host "HttpAcceptLanguageOptOut staus:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Control Panel\International\User Profile" `
 -rname "HttpAcceptLanguageOptOut" -rvalue 1
 
 Write-Host
 
+# Setting for the tracking of app launches for the "frequently used apps" or "most used apps" in the start menu
+Write-Host "Path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -ForegroundColor Gray
 Write-Host "Start_TrackProgs status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
 -rname "Start_TrackProgs" -rvalue 0
@@ -290,15 +302,11 @@ Write-Host
 
 Write-Host ::: Speech ::: -ForegroundColor Cyan
 
+Write-Host "Speech recognition"
+Write-Host "Path: HKCU:\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy" -ForegroundColor Gray
 Write-Host "HasAccepted status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy" `
 -rname "HasAccepted" -rvalue 0
-
-Write-Host
-
-Write-Host "AllowInputPersonalization status:" -ForegroundColor blue
-Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
--rname "AllowInputPersonalization" -rvalue 0
 
 Write-Host
 
@@ -306,45 +314,60 @@ Write-Host
 
 Write-Host ::: Inking and typing personalization ::: -ForegroundColor Cyan
 
-Write-Host "AllowLinguisticDataCollection:" -ForegroundColor blue
+Write-Host "Path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput" -ForegroundColor Gray
+Write-Host "AllowLinguisticDataCollection status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput" `
 -rname "AllowLinguisticDataCollection" -rvalue 0
 
 Write-Host
 
-Write-Host "HKCU:\Software\Microsoft\Input\TIPC\Enabled:" -ForegroundColor blue
+Write-Host "Path: HKCU:\Software\Microsoft\Input\TIPC" -ForegroundColor Gray
+Write-Host "Enabled status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\Software\Microsoft\Input\TIPC" `
 -rname "Enabled" -rvalue 0
 
 Write-Host
 
-Write-Host "HKLM RestrictImplicitTextCollection:" -ForegroundColor blue
+Write-Host "Path: HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" -ForegroundColor Gray
+Write-Host "HKLM RestrictImplicitTextCollection status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
 -rname "RestrictImplicitTextCollection" -rvalue 1
 
 Write-Host
 
-Write-Host "HKCU RestrictImplicitTextCollection:" -ForegroundColor blue
+Write-Host "Path: HKCU:\SOFTWARE\Microsoft\InputPersonalization" -ForegroundColor Gray
+Write-Host "HKCU RestrictImplicitTextCollection status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization" `
 -rname "RestrictImplicitTextCollection" -rvalue 1
 
 Write-Host
 
-Write-Host "HKLM RestrictImplicitInkCollection:" -ForegroundColor blue
+Write-Host "Path: HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" -ForegroundColor Gray
+Write-Host "HKLM RestrictImplicitInkCollection status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
 -rname "RestrictImplicitInkCollection" -rvalue 1
 
 Write-Host
 
-Write-Host "HKCU RestrictImplicitInkCollection:" -ForegroundColor blue
+Write-Host "Path: HKCU:\SOFTWARE\Microsoft\InputPersonalization" -ForegroundColor Gray
+Write-Host "HKCU RestrictImplicitInkCollection status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization" `
 -rname "RestrictImplicitInkCollection" -rvalue 1
 
 Write-Host
 
-Write-Host "HarvestContacts:" -ForegroundColor blue
+Write-Host "Path: HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore" -ForegroundColor Gray
+Write-Host "HarvestContacts status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore" `
 -rname "HarvestContacts" -rvalue 0
+
+Write-Host
+
+Write-Host "Typing and handwriting recolection"
+Write-Host "Path: HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" -ForegroundColor Gray
+Write-Host "AllowInputPersonalization status:" -ForegroundColor blue
+Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" `
+-rname "AllowInputPersonalization" -rvalue 0
 
 Write-Host
 
@@ -352,24 +375,32 @@ Write-Host
 
 Write-Host ::: Diagnostics and feedback ::: -ForegroundColor Cyan
 
+Write-Host "This is one of the main telemetry controllers"
+Write-Host "Path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -ForegroundColor Gray
 Write-Host "Windows -> DataCollection -> AllowTelemtry status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
 -rname "AllowTelemetry" -rvalue 0
 
 Write-Host
 
+Write-Host "This is one of the main telemetry controllers"
+Write-Host "Path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -ForegroundColor Gray
 Write-Host "CurrentVersion -> Policies -> MaxTelemetryAllowed status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" `
 -rname "MaxTelemetryAllowed" -rvalue 0
 
 Write-Host
 
+Write-Host "Telemetry related"
+Write-Host "Path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -ForegroundColor Gray
 Write-Host "CurrentVersion -> Policies -> AllowTelemetry status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" `
 -rname "AllowTelemetry" -rvalue 0
 
 Write-Host
 
+Write-Host "Telemetry related"
+Write-Host "Path: HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -ForegroundColor Gray
 Write-Host "Wow6432Node... -> Policies -> MaxTelemetryAllowed status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection" `
 -rname "MaxTelemetryAllowed" -rvalue 0
@@ -382,13 +413,13 @@ Edit-RegxDW -rpath "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\
 
 Write-Host
 
-Write-Host "LimitDiagnosticLogCollection" -ForegroundColor blue
+Write-Host "LimitDiagnosticLogCollection status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
 -rname "LimitDiagnosticLogCollection" -rvalue 1
 
 Write-Host
 
-Write-Host "AllowDeviceNameInDiagnosticData" -ForegroundColor blue
+Write-Host "AllowDeviceNameInDiagnosticData status:" -ForegroundColor blue
 Edit-RegxDW -rpath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" `
 -rname "AllowDeviceNameInDiagnosticData" -rvalue 0
 

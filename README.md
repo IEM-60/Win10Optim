@@ -47,3 +47,4 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 
 ## 📣 Notice
 This is not a finished project and I'm working on making the script much more descriptive so it's easier to understand the proposed modifications.
+Many of the settings affected by the script are very explicitly describe by its own name and many of them are being described with comments on the script, so please take a look at it.
